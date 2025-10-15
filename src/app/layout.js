@@ -1,5 +1,38 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { Carter_One, Courgette, Italianno, Roboto, Ubuntu } from "next/font/google";
+import localFont from "next/font/local";
+
+// 🧩 Import multiple fonts separately
+const carterOne = Carter_One({
+  subsets: ["latin"],
+  weight: "400",
+  variable: "--font-carterOne",
+});
+
+const courgette = Courgette({
+  subsets: ["latin"],
+  weight: "400",
+  variable: "--font-courgette",
+});
+
+const italianno = Italianno({
+  subsets: ["latin"],
+  weight: "400",
+  variable: "--font-italianno",
+});
+
+const roboto = Roboto({
+  subsets: ["latin"],
+  weight: ["400", "700"],
+  variable: "--font-roboto",
+});
+
+const ubuntu = Ubuntu({
+  subsets: ["latin"],
+  weight: ["400", "700"],
+  variable: "--font-ubuntu",
+});
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -18,9 +51,9 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html lang="en" className={`${carterOne.variable} ${courgette.variable} ${italianno.variable} ${roboto.variable} ${ubuntu.variable}`}>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        // className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         {children}
       </body>
