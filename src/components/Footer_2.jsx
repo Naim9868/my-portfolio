@@ -3,7 +3,7 @@ import { FaEnvelope, FaCopy, FaTimes } from 'react-icons/fa';
 
 const Footer_2 = () => {
   const [showEmailModal, setShowEmailModal] = useState(false);
-  const email = 'naimstillalive@gmail.com';
+  const email = 'naimislam9868@gmail.com';
 
   const handleEmailClick = () => {
     setShowEmailModal(true);
@@ -28,7 +28,7 @@ const Footer_2 = () => {
   };
 
   const openEmailClient = () => {
-    window.open(`https://mail.google.com/mail/?view=cm&fs=1&to=mstrowjakhatun7514@gmail.com&su=Hello%20Naim&body=Hi,%20I%20want%20to%20connect!`);
+    window.open(`https://mail.google.com/mail/?view=cm&fs=1&to=naimislam9868@gmail.com&su=Hello%20Naim&body=Hi,%20I%20want%20to%20connect!`);
     setShowEmailModal(false);
   };
 

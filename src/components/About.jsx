@@ -20,7 +20,7 @@ export default function AnimatedAbout() {
        `}>
         
         {/* Left Section - Profile Image with Animation */}
-        <div className="flex justify-center order-2 items-center p-8">
+        <div className="flex justify-center order-1 md:order-2 items-center p-8">
           <div className="relative w-64 h-64 md:w-80 md:h-80 group">
             {/* The offset frame / border behind image */}
             <div className={`absolute inset-0 rounded-[6px] border border-blue-400 
@@ -49,7 +49,7 @@ export default function AnimatedAbout() {
 
 
         {/* Right Section - About Content */}
-        <div className=" text-left lg:space-y-8  md:text-left mt-10 lg:mt-0 order-1 lg:col-span-2 ">
+        <div className=" text-left lg:space-y-8  md:text-left mt-10 lg:mt-0 order-2 md:order-1 lg:col-span-2 ">
           {/* Section title */}
           <div className=" flex gap-3 ">
             <h2 className={`font-['Ubuntu'] text-blue-400 mb-2
