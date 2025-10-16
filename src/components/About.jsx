@@ -27,7 +27,7 @@ export default function AnimatedAbout() {
                             transform translate-x-[-10px] translate-y-[-10px] 
                             transition-all duration-500 ease-in-out
                             group-hover:translate-x-[-14px] group-hover:translate-y-[-14px]
-                            group-hover:border-[#64ffda]
+                            group-hover:border-blue-400
                             group-hover:shadow-[0_0_20px_#64ffda,0_0_40px_#64ffda]
                             -z-10" `}/>
 

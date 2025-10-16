@@ -4,6 +4,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { Text, OrbitControls, useTexture } from '@react-three/drei';
 import { motion, AnimatePresence } from 'framer-motion';
+import { FaHome, FaUser, FaBriefcase, FaBolt, FaEnvelope } from 'react-icons/fa';
+import HexagonalLogo from './HexagonalLogo';
 import * as THREE from 'three';
 
 // 3D Navbar Background Component
@@ -57,11 +59,11 @@ const InteractiveNavbar = () => {
   const [isMobile, setIsMobile] = useState(false);
 
   const menuItems = [
-    { id: 'home', label: 'Home', icon: '🏠' },
-    { id: 'about', label: 'About', icon: '👤' },
-    { id: 'projects', label: 'Projects', icon: '💼' },
-    { id: 'skills', label: 'Skills', icon: '⚡' },
-    { id: 'contact', label: 'Contact', icon: '📧' },
+     { id: 'home', label: 'Home', icon: <FaHome /> },
+    { id: 'about', label: 'About', icon: <FaUser /> },
+    { id: 'projects', label: 'Projects', icon: <FaBriefcase /> },
+    { id: 'skills', label: 'Skills', icon: <FaBolt /> },
+    { id: 'contact', label: 'Contact', icon: <FaEnvelope /> },
   ];
 
   useEffect(() => {
@@ -128,9 +130,11 @@ const InteractiveNavbar = () => {
               transition={{ delay: 1.2 }}
               className="flex items-center space-x-3"
             >
-              <div className="w-7 h-7 rounded-full flex items-center justify-center">
+              {/* <div className="w-7 h-7 rounded-full flex items-center justify-center">
                 <span className="text-blue-400 font-bold text-lg">N</span>
-              </div>
+              </div> */}
+
+              <HexagonalLogo />
               <motion.span 
                 className="text-xl font-bold  text-blue-400 bg-clip-text "
                 whileHover={{ scale: 1.05 }}
@@ -159,7 +163,7 @@ const InteractiveNavbar = () => {
                         className="flex items-center space-x-1 px-2 py-1 rounded-lg transition-colors duration-200 hover:bg-black/15 dark:hover:bg-white/15"
                       >
                         {/* <span className="text-xl">{item.icon}</span> */}
-                        <span className="font-serif text-gray-700 dark:text-gray-200">
+                        <span className="font-serif text-gray-700 dark:text-blue-400">
                           {item.label}
                         </span>
                       </button>
@@ -168,7 +172,7 @@ const InteractiveNavbar = () => {
                       <motion.div
                         initial={{ width: 0 }}
                         animate={{ width: activeMenu === item.id ? '100%' : 0 }}
-                        className="h-0.5 bg-gradient-to-r from-[rgb(183,134,84)] to-[rgb] absolute bottom-0 left-0"
+                        className="h-0.5 bg-gradient-to-r from-[#63b3ed] to-[rgb] absolute bottom-0 left-0"
                       />
                     </motion.div>
                   ))}
@@ -182,21 +186,21 @@ const InteractiveNavbar = () => {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 1.2 }}
-                className="p-2 rounded-lg bg-black/10 dark:bg-white/10"
+                className="p-2 rounded-lg bg-transparent dark:bg-transparent"
                 onClick={() => setMenuVisible(!menuVisible)}
               >
-                <div className="w-6 h-6 flex flex-col justify-center space-y-1">
+                <div className="w-6 h-6 flex flex-col justify-center space-y-1.5">
                   <motion.span
-                    animate={{ rotate: menuVisible ? 0 : 45, y: menuVisible ? 0 : 6 }}
-                    className="block h-0.5 bg-gray-700 dark:bg-gray-200"
+                    animate={{ rotate: menuVisible ? 0 : 45, y: menuVisible ? 0 : 7 }}
+                    className={`block ${!menuVisible?"w-6":"w-5" } h-[1px] bg-gray-200 dark:bg-blue-400`}
                   />
                   <motion.span
                     animate={{ opacity: menuVisible ? 1 : 0 }}
-                    className="block h-0.5 bg-gray-700 dark:bg-gray-200"
+                    className="block w-3.5 h-[1px] bg-gray-200 dark:bg-blue-400"
                   />
                   <motion.span
-                    animate={{ rotate: menuVisible ? 0 : -45, y: menuVisible ? 0 : -6 }}
-                    className="block h-0.5 bg-gray-700 dark:bg-gray-200"
+                    animate={{ rotate: menuVisible ? 0 : -45, y: menuVisible ? 0 : -7 }}
+                    className={`block ${!menuVisible?"w-6":"w-2"} h-[1px] bg-gray-200 dark:bg-blue-400`}
                   />
                 </div>
               </motion.button>
@@ -223,12 +227,14 @@ const InteractiveNavbar = () => {
                         initial={{ opacity: 0, x: -20 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ delay: index * 0.1 }}
-                        className="flex items-center space-x-3 p-1 rounded-lg hover:bg-black/10 dark:hover:bg-white/10"
+                        className="flex items-center justify-center space-x-3 p-1 rounded-lg hover:bg-black/10 dark:hover:bg-white/10"
                       >
-                        <span className="text-2xl">{item.icon}</span>
-                        <span className="font-serif text-gray-700 dark:text-gray-200">
+                       <div className='flex items-center justify-between gap-4'>
+                         <span className="text-xl text-blue-400">{item.icon}</span>
+                        <span className="font-serif text-gray-700 dark:text-blue-400">
                           {item.label}
                         </span>
+                       </div>
                       </motion.button>
                     ))}
                   </div>
@@ -243,7 +249,7 @@ const InteractiveNavbar = () => {
           initial={{ scaleX: 0 }}
           animate={{ scaleX: 1 }}
           transition={{ duration: 1, ease: "easeInOut" }}
-          className="h-0.5 bg-blue-400 origin-left"
+          className="h-[1px] bg-blue-400 origin-right"
         />
       </nav>
     </div>
