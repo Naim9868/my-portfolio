@@ -1,6 +1,7 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Carter_One, Courgette, Italianno, Roboto, Ubuntu } from "next/font/google";
+import InteractiveNavbar from '../components/InteractiveNavbar';
 import localFont from "next/font/local";
 
 // 🧩 Import multiple fonts separately
@@ -54,7 +55,9 @@ export default function RootLayout({ children }) {
     <html lang="en" className={`${carterOne.variable} ${courgette.variable} ${italianno.variable} ${roboto.variable} ${ubuntu.variable}`}>
       <body
         // className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+       
       >
+         <InteractiveNavbar />
         {children}
       </body>
     </html>

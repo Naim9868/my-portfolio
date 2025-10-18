@@ -39,7 +39,7 @@ export default function Home() {
       </Head>
       
       <Earth3Dbg />
-      <InteractiveNavbar />
+      {/* <InteractiveNavbar /> */}
       <div style={{
         position: 'relative',
         zIndex: 1,

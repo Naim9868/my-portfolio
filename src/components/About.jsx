@@ -13,7 +13,7 @@ export default function AnimatedAbout() {
   }, []);
 
   return (
-    <div className="h-screen w-full dark:bg-transparent flex items-center justify-center p-5 lg:gap-3">
+    <div className="min-h-[1vh] w-full dark:bg-transparent flex items-center justify-center p-5 lg:gap-3">
       <div className={`mt-[-10px] mb-10 md:mt-[ 0px] sm:ml-5 sm:p-8 md:p-10 max-w-6xl
        w-full bg-transparent 
        grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-20"
