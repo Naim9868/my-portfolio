@@ -4,16 +4,20 @@ import Head from 'next/head';
 import Earth3Dbg from '../components/Earth3Dbg';
 import InteractiveNavbar from '../components/InteractiveNavbar';
 // import TransparentCard from '@/components/card/TransparentCard';
-import TransparentCard from '@/components/card/TransparentCard_1';
+// import TransparentCard from '@/components/card/TransparentCard_1';
 import AnimatedProfile from '@/components/HeroSection';
 import AnimatedAbout from '@/components/About';
 import AnimatedProjects from '@/components/Project';
 import AnimatedContact from '@/components/Contact'
 import Footer from '@/components/Footer';
+import { useConstantDark } from '../hooks/useConstantDark';
+
 
 
 
 export default function Home() {
+
+  useConstantDark(); // Ensures dark theme is applied
 
   const [isLoading, setIsLoading] = useState(true);
 
@@ -59,7 +63,7 @@ export default function Home() {
                 <AnimatedAbout />
             </div>
               <div className="w-full flex-3">
-                <AnimatedProjects />
+                 <AnimatedProjects /> 
               </div>
               <div className="w-full  flex-4 ">
                 <AnimatedContact />

@@ -46,7 +46,7 @@ const AboutPage = () => {
           <h1 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-6">
             About Me
           </h1>
-          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+          <p className="text-xl text-gray-400 dark:text-gray-300 max-w-3xl mx-auto">
             Passionate developer crafting digital experiences that make a difference
           </p>
         </motion.div>
@@ -54,10 +54,10 @@ const AboutPage = () => {
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Left Content */}
           <motion.div variants={itemVariants}>
-            <h2 className="text-3xl font-bold text-gray-800 dark:text-white mb-6">
+            <h2 className="text-3xl font-bold text-gray-200 dark:text-white mb-6">
               My Journey
             </h2>
-            <div className="space-y-4 text-gray-600 dark:text-gray-300 leading-relaxed">
+            <div className="space-y-4 text-gray-300 dark:text-gray-300 leading-relaxed">
               <p>
                 Hello! I'm Naim, a passionate full-stack developer with a love for 
                 creating beautiful and functional web applications. My journey in 
@@ -96,7 +96,7 @@ const AboutPage = () => {
 
           {/* Right Content - Skills */}
           <motion.div variants={itemVariants}>
-            <h3 className="text-2xl font-bold text-gray-800 dark:text-white mb-8">
+            <h3 className="text-2xl font-bold text-gray-200 dark:text-white mb-8">
               My Skills
             </h3>
             <div className="space-y-6">

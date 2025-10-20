@@ -62,7 +62,7 @@ const HexagonalLogo = () => {
                 backgroundSize: '300% 300%',
                 animation: 'gradientShift 2s ease infinite'
               }}>
-              <div className="w-full h-full bg-white dark:bg-gray-900 m-[1.5px]"
+              <div className="w-full h-full bg-blue-950 dark:bg-gray-900 m-[1.5px]"
                 style={{
                   clipPath: 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)'
                 }}>

@@ -14,6 +14,7 @@ export default function AnimatedAbout() {
 
   return (
     <div className="min-h-[1vh] w-full dark:bg-transparent flex items-center justify-center p-5 lg:gap-3">
+      
       <div className={`mt-[-10px] mb-10 md:mt-[ 0px] sm:ml-5 sm:p-8 md:p-10 max-w-6xl
        w-full bg-transparent 
        grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-20"
@@ -23,23 +24,26 @@ export default function AnimatedAbout() {
         <div className="flex justify-center order-1 md:order-2 items-center p-8">
           <div className="relative w-64 h-64 md:w-80 md:h-80 group">
             {/* The offset frame / border behind image */}
-            <div className={`absolute inset-0 rounded-[6px] border border-blue-400 
+            <div className={`absolute inset-0 rounded-[10px] border border-blue-400 
                             transform translate-x-[-10px] translate-y-[-10px] 
                             transition-all duration-500 ease-in-out
-                            group-hover:translate-x-[-14px] group-hover:translate-y-[-14px]
+                            group-hover:translate-x-[-10px] group-hover:translate-y-[-10px]
                             group-hover:border-blue-400
-                            group-hover:shadow-[0_0_20px_#64ffda,0_0_40px_#64ffda]
+                            group-hover:shadow-[0_0_20px_#3b82f6,0_0_40px_#64ffda]
                             -z-10" `}/>
 
             {/* The image container (on top) */}
-            <div className="relative w-full h-full overflow-hidden rounded-[6px] shadow-lg">
+            <div className={`relative w-full h-full overflow-hidden rounded-[10px] shadow-lg
+                    group-hover:translate-x-2 group-hover:translate-y-2 group-hover:border-blue-400
+                    transform transition-all duration-500 ease-in-out
+                    `}>
               <img
                 src="./images/profile pic.jpg"
                 alt="Profile"
-                className={`w-full h-full object-cover rounded-[6px]
-                          opacity-90 group-hover:opacity-100
+                className={`w-full h-full object-cover rounded-[10px]
+                          opacity-70 group-hover:opacity-100
                           transform transition-all duration-500 ease-in-out
-                          group-hover:translate-x-2 group-hover:translate-y-2`}
+                          `}
               />
             </div>
           </div>
@@ -51,8 +55,8 @@ export default function AnimatedAbout() {
         {/* Right Section - About Content */}
         <div className=" text-left lg:space-y-8  md:text-left mt-10 lg:mt-0 order-2 md:order-1 lg:col-span-2 ">
           {/* Section title */}
-          <div className=" flex gap-3 ">
-            <h2 className={`font-['Ubuntu'] text-blue-400 mb-2
+         <div className=" flex gap-3 ">
+            <h2 className={`font-['Ubuntu'] text-blue-400 mb-2 
             text-2xl  md:text-3xl lg:text-4xl font-bold bg-transparent bg-clip-text 
               transform transition-all duration-1000 ease-out
               ${isVisible ? 'translate-x-0 opacity-100' : '-translate-x-full opacity-0'}
@@ -60,17 +64,17 @@ export default function AnimatedAbout() {
               About Me 
                
             </h2>
-            <motion.span
+           {/* <motion.span
               className="block w-30 sm:w-40 md:w-80 lg:w-100 mt-4.5 h-[0.5px] md:mt-9 bg-blue-400"
-            />
+            />  */}
             
-          </div>
+          </div> 
 
           {/* Main description */}
           <div className="space-y-4 mb-4">
             <div className="overflow-hidden">
               <p className={`
-                text-sm md:text-xl lg:text-xl text-blue-400 dark:text-[#c0cef3] font-['courgette']
+                text-sm md:text-xl lg:text-xl text-[#c0cef3] dark:text-[#c0cef3] font-['courgette']
                 transform transition-all duration-1000 delay-200 ease-out
                 ${isVisible ? 'translate-x-0 opacity-100' : '-translate-x-full opacity-0'}
               `}>
@@ -82,7 +86,7 @@ export default function AnimatedAbout() {
 
             <div className="overflow-hidden">
               <p className={`
-                text-sm md:text-xl lg:text-xl text-blue-400 dark:text-[#c0cef3] font-['courgette']
+                text-sm md:text-xl lg:text-xl text-[#c0cef3] dark:text-[#c0cef3] font-['courgette']
                 transform transition-all duration-1000 delay-400 ease-out
                 ${isVisible ? 'translate-x-0 opacity-100' : '-translate-x-full opacity-0'}
               `}>

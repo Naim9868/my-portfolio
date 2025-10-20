@@ -46,7 +46,7 @@ export default function AnimatedProfile() {
           </div>
 
           <div className="overflow-hidden">
-            <h2 className={`text-blue-400
+            <h2 className={`text-[#aab9e0]
                text-sm md:text-2xl lg:text-3xl dark:text-[#aab9e0] font-serif
               transform transition-all duration-1000 delay-300 ease-out
               ${isVisible ? 'translate-x-0 opacity-100' : '-translate-x-full opacity-0'}
@@ -60,7 +60,7 @@ export default function AnimatedProfile() {
           </div>
 
           <div className="overflow-hidden">
-            <p className={`font-['courgette'] text-sm md:text-xl lg:text-xl text-blue-400
+            <p className={`font-['courgette'] text-sm md:text-xl lg:text-xl text-[#c0cef3
               dark:text-[#c0cef3] leading-relaxed text-shadow-md
               transform transition-all duration-1000 delay-500 ease-out
               ${isVisible ? 'translate-x-0 opacity-100' : '-translate-x-full opacity-0'}

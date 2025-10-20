@@ -101,7 +101,7 @@ const toggleMenu = (event) => {
   };
 
   return (
-    <div className="fixed top-0 left-0 w-full z-50 rounded-2xl  bg-[#0a192f]  border-white/20" >
+    <div className="fixed top-0 left-0 w-full shadow-xl bg-transparent backdrop-blur-2xl z-50 rounded-2xl  dark:bg-[#0a192f]  border-white/20" >
      
       {/* Navigation Content */}
       <nav className="relative z-10 " >
@@ -131,7 +131,7 @@ const toggleMenu = (event) => {
 
             {/* Desktop Menu */}
             {!isMobile && (
-              <div className="flex bg-[#0a192f] items-center space-x-0">
+              <div className="flex bg-transparent backdrop-blur-xl dark:bg-[#0a192f] items-center space-x-0">
                 <AnimatePresence>
                   {!menuVisible && menuItems.map((item, index) => (
                     <motion.div
@@ -150,8 +150,8 @@ const toggleMenu = (event) => {
                       >
                         {/* <span className="text-xl">{item.icon}</span> */}
                         <span
-                        className="font-serif text-gray-700 dark:text-blue-400">
-                          <Link  href={`/${item.id}`}>{item.label}</Link>
+                        className="font-serif text-blue-400 dark:text-blue-400">
+                          <Link  href={`/${index === 0? item.id = "": item.id}`}>{item.label}</Link>
                         </span>
                       </button>
                       
@@ -179,15 +179,15 @@ const toggleMenu = (event) => {
                 <div className="w-6 h-6 flex flex-col justify-center space-y-1.5">
                   <motion.span
                     animate={{ rotate: !menuVisible ? 0 : 45, y: !menuVisible ? 0 : 7 }}
-                    className={`block ${menuVisible?"w-6":"w-5" } h-[1px] bg-gray-200 dark:bg-blue-400`}
+                    className={`block ${menuVisible?"w-6":"w-5" } h-[1px] bg-blue-400 dark:bg-blue-400`}
                   />
                   <motion.span
                     animate={{ opacity: !menuVisible ? 1 : 0 }}
-                    className="block w-3.5 h-[1px] bg-gray-200 dark:bg-blue-400"
+                    className="block w-3.5 h-[1px] bg-blue-400 dark:bg-blue-400"
                   />
                   <motion.span
                     animate={{ rotate: !menuVisible ? 0 : -45, y: !menuVisible ? 0 : -7 }}
-                    className={`block ${menuVisible?"w-6":"w-2"} h-[1px] bg-gray-200 dark:bg-blue-400`}
+                    className={`block ${menuVisible?"w-6":"w-2"} h-[1px] bg-blue-400 dark:bg-blue-400`}
                   />
                 </div>
               </motion.button>
@@ -222,7 +222,7 @@ const toggleMenu = (event) => {
                        <div className='flex items-center justify-between gap-4'>
                          <span className="text-xl text-blue-400">{item.icon}</span>
                         <span
-                        className="font-serif text-gray-700 dark:text-blue-400">
+                        className="font-serif text-blue-400 dark:text-blue-400">
                           <Link  
                             href={`/${index === 0? item.id = "": item.id}`}
                             onClick={handleMenuItemClick}
