@@ -107,14 +107,14 @@ export default function AnimatedProjects() {
   };
 
   return (
-    <div className="min-h-[1vh] w-full bg-transparent flex items-center justify-center px-4 py-8">
-      <div className="w-full max-w-6xl bg-transparent">
+    <div className="min-h-[1vh] w-full bg-transparent flex items-center justify-center p-8 py-16">
+      <div className="w-full max-w-6xl sm:ml-5 sm:p-8 md:p-10 bg-transparent">
         
         {/* Section Header */}
-        <div className="text-left mb-8 md:mb-12">
+        <div className="text-center mb-8 md:mb-12">
           <div className="overflow-hidden">
-            <h2 className={`font-['Ubuntu'] text-blue-400 mb-2
-              text-2xl md:text-3xl lg:text-4xl font-bold
+            <h2 className={` text-blue-400 mb-5
+              text-2xl lg:text-5xl md:text-3xl font-bold
               transform transition-all duration-1000 ease-out
               ${isVisible ? 'translate-x-0 opacity-100' : '-translate-x-full opacity-0'}
             `}>
@@ -124,7 +124,7 @@ export default function AnimatedProjects() {
           
           <div className="overflow-hidden">
             <p className={`
-                text-sm md:text-base text-[#c0cef3] font-['courgette']
+                text-xs md:text-xl text-[#c0cef3] font-['courgette']
                 transform transition-all duration-1000 delay-400 ease-out
                 ${isVisible ? 'translate-x-0 opacity-100' : '-translate-x-full opacity-0'}
               `}>
@@ -139,7 +139,7 @@ export default function AnimatedProjects() {
             <div
               key={project.id}
               className={`
-                space-y-3 border border-blue-400/50 rounded-xl p-4 md:p-6 
+                space-y-3 border border-blue-300 rounded-xl p-4 md:p-6 shadow-xl shadow-gray-400/30 
                 bg-transparent backdrop-blur-sm transform transition-all duration-500 ease-out
                 hover:border-blue-400 hover:bg-blue-400/5
                 ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-6 opacity-0'}
@@ -156,7 +156,7 @@ export default function AnimatedProjects() {
               )}
 
               {/* Project Image - Smaller on Mobile */}
-              <div className="overflow-hidden rounded-lg border border-blue-400/30">
+              <div className="overflow-hidden rounded-lg shadow-xl shadow-right  shadow-gray-400/30">
                 <ImageWithFallback
                   src={project.image}
                   alt={project.title}

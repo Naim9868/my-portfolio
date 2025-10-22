@@ -23,7 +23,7 @@ export default function AnimatedProfile() {
   return (
      
     <div className=" h-screen w-full bg-transparent  ">
-      <div className="mt-[180px]  md:mt-[35vh] sm:ml-5 sm:p-8 md:p-10 max-w-6xl w-full bg-transparent pl-4 
+      <div className="mt-[180px]  md:mt-[20vh] sm:ml-5 sm:p-8 md:p-10 max-w-6xl w-full bg-transparent pl-4 
        ">
         
         {/* Profile Information */}

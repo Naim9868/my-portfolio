@@ -41,7 +41,7 @@ export default function AnimatedAbout() {
                 src="./images/profile pic.jpg"
                 alt="Profile"
                 className={`w-full h-full object-cover rounded-[10px]
-                          opacity-70 group-hover:opacity-100
+                          opacity-90 group-hover:opacity-100
                           transform transition-all duration-500 ease-in-out
                           `}
               />
