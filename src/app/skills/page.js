@@ -67,7 +67,7 @@ const SkillsPage = () => {
       variants={containerVariants}
       className="min-h-screen py-20 px-4"
     >
-      <div className="max-w-6xl mx-auto">
+      <div className="mt-10 max-w-6xl mx-auto">
         {/* Header */}
         <motion.div
           variants={itemVariants}

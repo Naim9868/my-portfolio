@@ -182,7 +182,7 @@ const InteractiveNavbar = () => {
               >
                 <HexagonalLogo />
                 <motion.span 
-                  className={`font-bold text-blue-400 bg-clip-text ${
+                  className={`font-['courgette'] font-bold text-blue-400 bg-clip-text ${
                     isMedium ? 'text-2xl' : 'text-xl'
                   }`}
                   whileHover={{ scale: 1.05 }}
@@ -266,7 +266,7 @@ const InteractiveNavbar = () => {
                     initial={{ opacity: 0, height: 0 }}
                     animate={{ opacity: 1, height: 'auto' }}
                     exit={{ opacity: 0, height: 0 }}
-                    className="bg-gray-300 dark:bg-[#1d323a] backdrop-blur-lg border-t border-white/20"
+                    className="bg-gray-700 dark:bg-[#0b0c18] backdrop-blur-lg border-t border-white/20"
                   >
                     <div className="container mx-auto px-4 py-4">
                       <div className="flex flex-col space-y-2">

@@ -113,7 +113,7 @@ export default function AnimatedContact() {
           </div>
           
           <div className="overflow-hidden">
-            <p className={`text-xs md:text-xl dark:text-[#c0cef3] font-['courgette'] mt-2 md:mt-4 max-w-2xl mx-auto transform transition-all duration-1000 delay-300 ease-out ${isVisible ? 'translate-y-0 opacity-100' : '-translate-y-10 opacity-0'}`}>
+            <p className={`text-xs md:text-xl text-gray-400 font-['courgette'] mt-2 md:mt-4 max-w-2xl mx-auto transform transition-all duration-1000 delay-300 ease-out ${isVisible ? 'translate-y-0 opacity-100' : '-translate-y-10 opacity-0'}`}>
               Let&apos;s work together! I&apos;m always open to discussing new opportunities and creative projects.
             </p>
           </div>

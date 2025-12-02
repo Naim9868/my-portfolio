@@ -4,6 +4,7 @@
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
+import { FaDownload,FaProjectDiagram } from 'react-icons/fa';
 
 export default function AnimatedAbout() {
   const [isVisible, setIsVisible] = useState(false);
@@ -74,7 +75,7 @@ export default function AnimatedAbout() {
           <div className="space-y-4 mb-4">
             <div className="overflow-hidden">
               <p className={`
-                text-sm md:text-xl lg:text-xl text-[#c0cef3] dark:text-[#c0cef3] font-['courgette']
+                text-sm md:text-xl lg:text-xl text-gray-400 dark:text-[#c0cef3] font-['courgette']
                 transform transition-all duration-1000 delay-200 ease-out
                 ${isVisible ? 'translate-x-0 opacity-100' : '-translate-x-full opacity-0'}
               `}>
@@ -86,7 +87,7 @@ export default function AnimatedAbout() {
 
             <div className="overflow-hidden">
               <p className={`
-                text-sm md:text-xl lg:text-xl text-[#c0cef3] dark:text-[#c0cef3] font-['courgette']
+                text-sm md:text-xl lg:text-xl text-gray-400 dark:text-[#c0cef3] font-['courgette']
                 transform transition-all duration-1000 delay-400 ease-out
                 ${isVisible ? 'translate-x-0 opacity-100' : '-translate-x-full opacity-0'}
               `}>
@@ -104,8 +105,9 @@ export default function AnimatedAbout() {
               { number: '100%', label: 'Client Satisfaction' }
             ].map((stat, index) => (
               <div key={stat.label} className=" p-1 md:p-2 overflow-hidden">
-                <div className={`px-0 py-3 ring-1 ring-blue-400 text-center
-              backdrop-blur-sm text-blue-400 dark:text-[#c0cef3] bg-[#0a192f] rounded-lg font-semibold border-1-solid border-blue-400
+                 {/* text-blue-400 dark:text-[#c0cef3] bg-[#0a192f] */}
+                <div className={`px-0 py-3 ring-1 ring-blue-400 text-center bg-gradient-to-r from-blue-600 to-purple-600 text-white
+              backdrop-blur-sm rounded-lg font-semibold border-1-solid border-blue-400
                transition-all transform hover:translate-y-[-2px] hover:translate-x-[-2px] 
               hover:shadow-[4px_4px_#64ffda]`}>
                   <div className="text-xl sm:text-2xl font-bold">{stat.number}</div>
@@ -153,7 +155,7 @@ export default function AnimatedAbout() {
                 // Replace with your resume link
                 window.open('/files/resume.pdf', '_blank');
                }}>
-                Download Resume
+                Download Resume <FaDownload className='ml-2 inline' />
               </button>
 
               <button className={`px-4 py-3 ring-1 ring-blue-400
@@ -163,7 +165,7 @@ export default function AnimatedAbout() {
                 // Replace with your projects link
                 window.open('/projects', '_blank');
                }}>
-                View Projects
+                View Projects <FaProjectDiagram className='ml-2 inline' />
               </button>
             </div>
           </div>

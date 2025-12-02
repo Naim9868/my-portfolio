@@ -1,0 +1,33 @@
+.naim-signature {
+  font-family: 'Dancing Script', cursive;
+  position: relative;
+  display: inline-block;
+  padding: 10px 0;
+  background: white;
+}
+
+.letter-n {
+  display: inline-block;
+  font-weight: 700;
+}
+
+.signature-text {
+  font-weight: 500;
+}
+
+.flourish {
+  position: absolute;
+  height: 3px;
+  transform: rotate(-15deg);
+}
+
+.flourish::after {
+  content: '';
+  position: absolute;
+  right: -5px;
+  top: -3px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: inherit;
+}

@@ -35,7 +35,7 @@ const AboutPage = () => {
       initial="hidden"
       animate="visible"
       variants={containerVariants}
-      className="min-h-screen py-20 px-4"
+      className="min-h-screen py-20 px-4 mt-20"
     >
       <div className="max-w-6xl mx-auto">
         {/* Header */}

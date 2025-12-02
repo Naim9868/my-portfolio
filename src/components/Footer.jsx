@@ -1,5 +1,5 @@
 import React from 'react';
-import Footer_2 from './Footer_2';
+import Footer_2 from './EmailModal';
 import { 
   FaGithub, 
   FaLinkedin, 

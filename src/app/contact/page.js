@@ -2,6 +2,7 @@
 import { motion } from 'framer-motion';
 import { useState } from 'react';
 import { FaEnvelope, FaPhone, FaMapMarkerAlt, FaPaperPlane } from 'react-icons/fa';
+import emailjs from "emailjs-com";
 
 const ContactPage = () => {
   const [formData, setFormData] = useState({
@@ -10,6 +11,8 @@ const ContactPage = () => {
     subject: '',
     message: ''
   });
+
+ const [isSending, setIsSending] = useState(false);
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -33,7 +36,27 @@ const ContactPage = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     // Handle form submission
+     setIsSending(true);
     console.log('Form submitted:', formData);
+
+    //emailjs setup.
+    const SERVICE_ID = "service_exxu8un";
+    const TEMPLATE_ID = "template_kwkeo1c";
+    const PUBLIC_KEY = "vR1VFMtGTt3fsxQ9f";
+
+    emailjs
+      .send(SERVICE_ID, TEMPLATE_ID, formData, PUBLIC_KEY)
+      .then(
+        () => {
+          alert("✅ Message sent successfully!");
+          setFormData({ name: "", email: "", subject: "", message: "" });
+        },
+        (error) => {
+          alert("❌ Failed to send message. Try again later.");
+          // console.error("EmailJS Error:", error);
+        }
+      )
+      .finally(() => setIsSending(false))
   };
 
   const handleChange = (e) => {
@@ -47,20 +70,20 @@ const ContactPage = () => {
     {
       icon: <FaEnvelope />,
       title: 'Email',
-      value: 'naim@example.com',
-      link: 'mailto:naim@example.com'
+      value: 'naimislam9868@gmail.com',
+      link: 'https://mail.google.com/mail/?view=cm&fs=1&to=naimislam9868@gmail.com&su=Hello%20Naim&body=Hi,%20I%20want%20to%20connect!'
     },
     {
       icon: <FaPhone />,
       title: 'Phone',
-      value: '+1 (555) 123-4567',
-      link: 'tel:+15551234567'
+      value: '+88 01521-529868',
+      link: 'tel:+8801521529868'
     },
     {
       icon: <FaMapMarkerAlt />,
       title: 'Location',
       value: 'Dhaka, Bangladesh',
-      link: '#'
+      link: 'https://www.google.com/search?q=location+dhaka+bangladesh&ie=UTF-8'
     }
   ];
 
@@ -69,7 +92,7 @@ const ContactPage = () => {
       initial="hidden"
       animate="visible"
       variants={containerVariants}
-      className="min-h-screen py-20 px-4"
+      className="min-h-screen py-20 px-4 mt-20"
     >
       <div className="max-w-6xl mx-auto">
         {/* Header */}
@@ -210,7 +233,7 @@ const ContactPage = () => {
                 whileTap={{ scale: 0.95 }}
                 className="w-full px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center gap-2"
               >
-                Send Message
+                 {isSending ? "Sending..." : "Send Message"}
                 <FaPaperPlane />
               </motion.button>
             </form>

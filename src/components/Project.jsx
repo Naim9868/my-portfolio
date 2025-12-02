@@ -40,7 +40,7 @@ export default function AnimatedProjects() {
       id: 3,
       title: "AI Content Generator",
       description: "AI-powered content generation with NLP and templates.",
-      image: "images/image_1.png",
+      image: "",
       technologies: ["Python", "FastAPI", "React", "OpenAI"],
       category: "AI/ML",
       liveUrl: "#",
