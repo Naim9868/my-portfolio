@@ -36,7 +36,13 @@ export default function AboutEditor() {
       const response = await fetch('/api/admin/about');
       const data = await response.json();
       if (data) {
-        setAboutData(data);
+        setAboutData(prev =>({
+          ...prev,
+          ...data,
+          stats: data?.stats ?? prev.stats,
+          skills: data?.skills ?? prev.skills,
+          buttons: data?.buttons ?? prev.buttons
+        }));
       }
     } catch (error) {
       console.error('Error fetching about data:', error);
@@ -44,6 +50,7 @@ export default function AboutEditor() {
   };
 
   const handleSave = async () => {
+    console.log(aboutData);
     try {
       const response = await fetch('/api/admin/about', {
         method: 'POST',

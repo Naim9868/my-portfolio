@@ -66,7 +66,7 @@ export default function AdminLayout({ children }) {
   return (
     <div className="min-h-screen bg-gray-900 text-white">
       {/* Sidebar */}
-      <div className="fixed left-0 top-0 h-full w-64 bg-gray-800 border-r border-gray-700">
+      <div className="fixed left-0 top-25 h-full w-64 bg-gray-800 border-r border-gray-700">
         <div className="p-6 border-b border-gray-700">
           <h1 className="text-2xl font-bold text-blue-400">Portfolio Admin</h1>
           <p className="text-gray-400 text-sm">Manage your portfolio content</p>

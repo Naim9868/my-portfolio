@@ -39,7 +39,11 @@ export default function FooterEditor() {
       const response = await fetch('/api/admin/footer');
       const data = await response.json();
       if (data) {
-        setFooterData(data);
+        setFooterData(prev =>({
+          ...prev,
+          ...data,
+          socialLinks: data?.socialLinks ?? prev.socialLinks
+        }));
       }
     } catch (error) {
       console.error('Error fetching footer data:', error);
@@ -47,6 +51,7 @@ export default function FooterEditor() {
   };
 
   const handleSave = async () => {
+    console.log(footerData);
     try {
       const response = await fetch('/api/admin/footer', {
         method: 'POST',

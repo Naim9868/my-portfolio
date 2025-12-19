@@ -4,30 +4,7 @@ import { FaSave, FaPlus, FaTrash, FaEdit, FaExternalLinkAlt, FaGithub } from 're
 
 export default function ProjectEditor() {
   const [projectsData, setProjectsData] = useState({
-    projects: [
-      {
-        id: 1,
-        title: "E-Commerce Platform",
-        description: "Full-stack e-commerce with real-time inventory and payment integration.",
-        image: "/api/placeholder/400/250",
-        technologies: ["React", "Node.js", "MongoDB", "Stripe"],
-        category: "Full Stack",
-        liveUrl: "#",
-        githubUrl: "#",
-        featured: true
-      },
-      {
-        id: 2,
-        title: "Task Management App",
-        description: "Collaborative task management with real-time updates.",
-        image: "/api/placeholder/400/250",
-        technologies: ["Vue.js", "Firebase", "Tailwind", "PWA"],
-        category: "Frontend",
-        liveUrl: "#",
-        githubUrl: "#",
-        featured: false
-      }
-    ],
+    projects: [],
     enabled: true,
     showAllButton: true
   });
@@ -50,19 +27,36 @@ export default function ProjectEditor() {
     fetchProjectsData();
   }, []);
 
-  const fetchProjectsData = async () => {
-    try {
-      const response = await fetch('/api/admin/projects');
-      const data = await response.json();
-      if (data) {
-        setProjectsData(data);
-      }
-    } catch (error) {
-      console.error('Error fetching projects data:', error);
+const fetchProjectsData = async () => {
+  try {
+    const response = await fetch('/api/admin/projects');
+
+    if (!response.ok) {
+      console.error('API error:', response.status);
+      return;
     }
-  };
+
+    const text = await response.text();
+    if (!text) {
+      console.warn('Empty API response');
+      return;
+    }
+
+    const data = JSON.parse(text);
+    console.log(data);
+    setProjectsData(prev => ({
+      ...prev,
+      ...data,
+      projects: data?.projects ?? prev.projects
+    }));
+
+  } catch (error) {
+    console.error('Fetch error:', error);
+  }
+};
 
   const handleSave = async () => {
+    console.log(projectsData);
     try {
       const response = await fetch('/api/admin/projects', {
         method: 'POST',
@@ -90,6 +84,8 @@ export default function ProjectEditor() {
         ...prev,
         projects: [...prev.projects, project]
       }));
+
+      console.log(project);
       
       setNewProject({
         title: '',

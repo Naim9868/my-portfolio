@@ -7,7 +7,7 @@ import AboutEditor from './components/AboutEditor';
 import ProjectEditor from './components/ProjectEditor';
 import ContactEditor from './components/ContactEditor';
 import ComponentManager from './components/ConponentManager';
-import { FaChartLine, FaEdit, FaToggleOn, FaDatabase } from 'react-icons/fa';
+import { FaEye, FaCog , FaEdit, FaToggleOn, FaDatabase, FaPuzzlePiece,FaProjectDiagram} from 'react-icons/fa';
 
 function DashboardContent() {
   const searchParams = useSearchParams();
@@ -62,7 +62,7 @@ function DashboardContent() {
         return <ComponentManager />;
       default:
         return (
-          <div className="space-y-8">
+          <div className="space-y-8 pt-20">
             {/* Dashboard Stats */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               <div className="bg-gray-800 rounded-xl p-6 border border-gray-700">
@@ -149,8 +149,8 @@ function DashboardContent() {
   };
 
   return (
-    <div>
-      <div className="mb-8">
+    <div className='pt-20'> 
+      <div className="mb-8 pt-10">
         <h1 className="text-3xl font-bold capitalize">
           {section === 'dashboard' ? 'Dashboard' : `Edit ${section}`}
         </h1>

@@ -1,6 +1,7 @@
 'use client';
 import { useState, useEffect } from 'react';
 import { FaSave, FaPlus, FaTrash } from 'react-icons/fa';
+import { FiPlus } from "react-icons/fi"
 
 export default function HeroEditor() {
   const [heroData, setHeroData] = useState({
@@ -22,6 +23,14 @@ export default function HeroEditor() {
     showScrollIndicator: true
   });
 
+  const sateCtaButtons = Array.isArray(heroData.ctaButtons)
+    ? heroData.ctaButtons
+    : [];
+
+  const safeSocialLinks = Array.isArray(heroData.socialLinks)
+    ? heroData.socialLinks
+    : [];
+
   useEffect(() => {
     fetchHeroData();
   }, []);
@@ -31,7 +40,12 @@ export default function HeroEditor() {
       const response = await fetch('/api/admin/hero');
       const data = await response.json();
       if (data) {
-        setHeroData(data);
+        setHeroData(prev => ({
+          ...prev,
+          ...data,
+          ctaButtons: data?.ctaButtons ?? prev.ctaButtons,
+          socialLinks: data?.socialLinks ?? prev.socialLinks
+        }));
       }
     } catch (error) {
       console.error('Error fetching hero data:', error);
@@ -39,13 +53,14 @@ export default function HeroEditor() {
   };
 
   const handleSave = async () => {
+    console.log(heroData);
     try {
       const response = await fetch('/api/admin/hero', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(heroData)
       });
-      
+
       if (response.ok) {
         alert('Hero section saved successfully!');
       }
@@ -74,7 +89,7 @@ export default function HeroEditor() {
           <input
             type="text"
             value={heroData.name}
-            onChange={(e) => setHeroData({...heroData, name: e.target.value})}
+            onChange={(e) => setHeroData({ ...heroData, name: e.target.value })}
             className="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-2 focus:outline-none focus:border-blue-500"
           />
         </div>
@@ -85,17 +100,17 @@ export default function HeroEditor() {
             <input
               type="text"
               value={heroData.title}
-              onChange={(e) => setHeroData({...heroData, title: e.target.value})}
+              onChange={(e) => setHeroData({ ...heroData, title: e.target.value })}
               className="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-2 focus:outline-none focus:border-blue-500"
             />
           </div>
-          
+
           <div>
             <label className="block text-sm font-medium mb-2">Subtitle</label>
             <input
               type="text"
               value={heroData.subtitle}
-              onChange={(e) => setHeroData({...heroData, subtitle: e.target.value})}
+              onChange={(e) => setHeroData({ ...heroData, subtitle: e.target.value })}
               className="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-2 focus:outline-none focus:border-blue-500"
             />
           </div>
@@ -105,7 +120,7 @@ export default function HeroEditor() {
           <label className="block text-sm font-medium mb-2">Tagline</label>
           <textarea
             value={heroData.tagline}
-            onChange={(e) => setHeroData({...heroData, tagline: e.target.value})}
+            onChange={(e) => setHeroData({ ...heroData, tagline: e.target.value })}
             rows="2"
             className="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-2 focus:outline-none focus:border-blue-500"
           />
@@ -115,7 +130,7 @@ export default function HeroEditor() {
           <label className="block text-sm font-medium mb-2">Description</label>
           <textarea
             value={heroData.description}
-            onChange={(e) => setHeroData({...heroData, description: e.target.value})}
+            onChange={(e) => setHeroData({ ...heroData, description: e.target.value })}
             rows="4"
             className="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-2 focus:outline-none focus:border-blue-500"
           />
@@ -125,59 +140,137 @@ export default function HeroEditor() {
         <div>
           <h3 className="text-lg font-semibold mb-4">Call-to-Action Buttons</h3>
           <div className="space-y-4">
-            {heroData.ctaButtons.map((button, index) => (
-              <div key={index} className="flex items-center space-x-4 bg-gray-900 p-4 rounded-lg">
-                <div className="flex-1 grid grid-cols-3 gap-4">
-                  <input
-                    type="text"
-                    value={button.text}
-                    onChange={(e) => {
-                      const newButtons = [...heroData.ctaButtons];
-                      newButtons[index].text = e.target.value;
-                      setHeroData({...heroData, ctaButtons: newButtons});
+            {sateCtaButtons.map((button, index) => {
+              return (
+                <div key={index} className="flex items-center space-x-4 bg-gray-900 p-4 rounded-lg">
+                  <div className="flex-1 grid grid-cols-3 gap-4">
+                    <input
+                      type="text"
+                      value={button.text}
+                      onChange={(e) => {
+                        const newButtons = [...heroData.ctaButtons];
+                        newButtons[index].text = e.target.value;
+                        setHeroData({ ...heroData, ctaButtons: newButtons });
+                      }}
+                      className="bg-gray-800 border border-gray-600 rounded-lg px-4 py-2 focus:outline-none focus:border-blue-500"
+                      placeholder="Button Text"
+                    />
+
+                    <input
+                      type="text"
+                      value={button.url}
+                      onChange={(e) => {
+                        const newButtons = [...heroData.ctaButtons];
+                        newButtons[index].url = e.target.value;
+                        setHeroData({ ...heroData, ctaButtons: newButtons });
+                      }}
+                      className="bg-gray-800 border border-gray-600 rounded-lg px-4 py-2 focus:outline-none focus:border-blue-500"
+                      placeholder="URL"
+                    />
+
+                    <select
+                      value={button.variant}
+                      onChange={(e) => {
+                        const newButtons = [...heroData.ctaButtons];
+                        newButtons[index].variant = e.target.value;
+                        setHeroData({ ...heroData, ctaButtons: newButtons });
+                      }}
+                      className="bg-gray-800 border border-gray-600 rounded-lg px-4 py-2 focus:outline-none focus:border-blue-500"
+                    >
+                      <option value="primary">Primary</option>
+                      <option value="secondary">Secondary</option>
+                      <option value="outline">Outline</option>
+                    </select>
+                  </div>
+
+                  <button
+                    onClick={() => {
+                      const newButtons = heroData.ctaButtons.filter((_, i) => i !== index);
+                      setHeroData({ ...heroData, ctaButtons: newButtons });
                     }}
-                    className="bg-gray-800 border border-gray-600 rounded-lg px-4 py-2 focus:outline-none focus:border-blue-500"
-                    placeholder="Button Text"
-                  />
-                  
-                  <input
-                    type="text"
-                    value={button.url}
-                    onChange={(e) => {
-                      const newButtons = [...heroData.ctaButtons];
-                      newButtons[index].url = e.target.value;
-                      setHeroData({...heroData, ctaButtons: newButtons});
-                    }}
-                    className="bg-gray-800 border border-gray-600 rounded-lg px-4 py-2 focus:outline-none focus:border-blue-500"
-                    placeholder="URL"
-                  />
-                  
-                  <select
-                    value={button.variant}
-                    onChange={(e) => {
-                      const newButtons = [...heroData.ctaButtons];
-                      newButtons[index].variant = e.target.value;
-                      setHeroData({...heroData, ctaButtons: newButtons});
-                    }}
-                    className="bg-gray-800 border border-gray-600 rounded-lg px-4 py-2 focus:outline-none focus:border-blue-500"
+                    className="p-2 text-red-400 hover:text-red-300 transition-colors"
                   >
-                    <option value="primary">Primary</option>
-                    <option value="secondary">Secondary</option>
-                    <option value="outline">Outline</option>
-                  </select>
+                    <FaTrash />
+                  </button>
                 </div>
-                
-                <button
-                  onClick={() => {
-                    const newButtons = heroData.ctaButtons.filter((_, i) => i !== index);
-                    setHeroData({...heroData, ctaButtons: newButtons});
-                  }}
-                  className="p-2 text-red-400 hover:text-red-300 transition-colors"
-                >
-                  <FaTrash />
-                </button>
-              </div>
-            ))}
+              )
+            })}
+          </div>
+        </div>
+
+        {/* socialLinks customization */}
+        <div>
+          <h3 className="text-lg font-semibold mb-4">Social Links </h3>
+          <div className="space-y-4">
+            {safeSocialLinks.map((button, index) => {
+              return (
+                <div key={index} className="flex items-center space-x-4 bg-gray-900 p-4 rounded-lg">
+                  <div className="flex-1 grid grid-cols-3 gap-4">
+                    <input
+                      type="text"
+                      value={button.platform}
+                      onChange={(e) => {
+                        const newButtons = [...heroData.socialLinks];
+                        newButtons[index].platform = e.target.value;
+                        setHeroData({ ...heroData, socialLinks: newButtons });
+                      }}
+                      className="bg-gray-800 border border-gray-600 rounded-lg px-4 py-2 focus:outline-none focus:border-blue-500"
+                      placeholder="Platform"
+                    />
+
+                    <input
+                      type="text"
+                      value={button.url}
+                      onChange={(e) => {
+                        const newButtons = [...heroData.socialLinks];
+                        newButtons[index].url = e.target.value;
+                        setHeroData({ ...heroData, socialLinks: newButtons });
+                      }}
+                      className="bg-gray-800 border border-gray-600 rounded-lg px-4 py-2 focus:outline-none focus:border-blue-500"
+                      placeholder="URL"
+                    />
+
+                    <input
+                      type="text"
+                      value={button.icon}
+                      onChange={(e) => {
+                        const newButtons = [...heroData.socialLinks];
+                        newButtons[index].icon = e.target.value;
+                        setHeroData({ ...heroData, socialLinks: newButtons });
+                      }}
+                      className="bg-gray-800 border border-gray-600 rounded-lg px-4 py-2 focus:outline-none focus:border-blue-500"
+                      placeholder="icon (only name like FaTrash)"
+                    />
+                  </div>
+                  <button
+                    onClick={() => {
+                      const newButtons = heroData.socialLinks.filter((_, i) => i !== index);
+                      setHeroData({ ...heroData, socialLinks: newButtons });
+                    }}
+                    className="p-2 text-red-300 hover:text-red-600 transition-colors"
+                  >
+                    <FaTrash />
+                  </button>
+
+                </div>
+              )
+            })}
+
+
+            <button
+              onClick={() => {
+                const emptySocialLink = {
+                  platform: " ", url: " ", icon: " "
+                }
+                setHeroData({
+                  ...heroData,
+                  socialLinks: [...heroData.socialLinks, emptySocialLink]
+                });
+              }}
+              className="p-2 text-gray-300 hover:text-green-400 text-2xl  transition-colors"
+            >
+              <FaPlus />
+            </button>
           </div>
         </div>
 
@@ -192,7 +285,7 @@ export default function HeroEditor() {
               <input
                 type="checkbox"
                 checked={heroData.enabled}
-                onChange={(e) => setHeroData({...heroData, enabled: e.target.checked})}
+                onChange={(e) => setHeroData({ ...heroData, enabled: e.target.checked })}
                 className="sr-only peer"
               />
               <div className="w-11 h-6 bg-gray-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
@@ -208,7 +301,7 @@ export default function HeroEditor() {
               <input
                 type="checkbox"
                 checked={heroData.showScrollIndicator}
-                onChange={(e) => setHeroData({...heroData, showScrollIndicator: e.target.checked})}
+                onChange={(e) => setHeroData({ ...heroData, showScrollIndicator: e.target.checked })}
                 className="sr-only peer"
               />
               <div className="w-11 h-6 bg-gray-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>

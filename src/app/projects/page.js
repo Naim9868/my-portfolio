@@ -20,7 +20,8 @@ const Page = () => {
       githubUrl: "#",
       featured: true
     },
-    {      id: 2,
+    { 
+      id: 2,
       title: "Task Management App",
       description: "A collaborative task management application with real-time updates, drag-and-drop functionality, and team collaboration features.",
       image: "/api/placeholder/600/400",

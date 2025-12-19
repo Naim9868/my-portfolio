@@ -25,7 +25,7 @@ export default function PreviewPage() {
   };
 
   return (
-    <div>
+    <div className='mt-40'>
       <div className="flex justify-between items-center mb-6">
         <div>
           <h1 className="text-3xl font-bold">Live Preview</h1>
