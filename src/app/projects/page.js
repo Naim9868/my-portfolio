@@ -1,5 +1,5 @@
 "use client"
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 import { FaExternalLinkAlt, FaGithub, FaArrowLeft, FaArrowRight } from 'react-icons/fa';
 
 
@@ -7,75 +7,47 @@ import { FaExternalLinkAlt, FaGithub, FaArrowLeft, FaArrowRight } from 'react-ic
 const Page = () => {
   const [activeFilter, setActiveFilter] = useState('all');
   const [currentProject, setCurrentProject] = useState(0);
+  const [projectsData, setProjectsData] = useState({
+    projects: [],
+    enabled: true,
+    showAllButton: true
+  })
 
-  const projects = [
-    {
-      id: 1,
-      title: "E-Commerce Platform",
-      description: "A full-stack e-commerce solution with React, Node.js, and MongoDB. Features include user authentication, payment processing, and admin dashboard.",
-      image: "/api/placeholder/600/400",
-      technologies: ["React", "Node.js", "MongoDB", "Stripe", "JWT"],
-      category: "fullstack",
-      liveUrl: "#",
-      githubUrl: "#",
-      featured: true
-    },
-    { 
-      id: 2,
-      title: "Task Management App",
-      description: "A collaborative task management application with real-time updates, drag-and-drop functionality, and team collaboration features.",
-      image: "/api/placeholder/600/400",
-      technologies: ["Next.js", "TypeScript", "Socket.io", "PostgreSQL"],
-      category: "frontend",
-      liveUrl: "#",
-      githubUrl: "#",
-      featured: true
-    },
-    {
-      id: 3,
-      title: "Weather Dashboard",
-      description: "A beautiful weather application with 7-day forecasts, interactive maps, and location-based services.",
-      image: "/api/placeholder/600/400",
-      technologies: ["React", "Chart.js", "OpenWeather API", "Geolocation"],
-      category: "frontend",
-      liveUrl: "#",
-      githubUrl: "#",
-      featured: false
-    },
-    {
-      id: 4,
-      title: "AI Content Generator",
-      description: "An AI-powered content generation tool that helps creators write engaging content using machine learning algorithms.",
-      image: "/api/placeholder/600/400",
-      technologies: ["Python", "FastAPI", "React", "OpenAI API", "Docker"],
-      category: "fullstack",
-      liveUrl: "#",
-      githubUrl: "#",
-      featured: true
-    },
-    {
-      id: 5,
-      title: "Fitness Tracker",
-      description: "A mobile-first fitness tracking application with workout plans, progress analytics, and social features.",
-      image: "/api/placeholder/600/400",
-      technologies: ["React Native", "Firebase", "Redux", "Chart.js"],
-      category: "mobile",
-      liveUrl: "#",
-      githubUrl: "#",
-      featured: false
-    },
-    {
-      id: 6,
-      title: "Portfolio Website",
-      description: "A modern, responsive portfolio website with smooth animations, dark mode, and optimized performance.",
-      image: "/api/placeholder/600/400",
-      technologies: ["Next.js", "Tailwind CSS", "Framer Motion", "Vercel"],
-      category: "frontend",
-      liveUrl: "#",
-      githubUrl: "#",
-      featured: false
+  const { projects } = projectsData;
+
+    useEffect(() => {
+      fetchProjectsData();
+    }, []);
+  
+  const fetchProjectsData = async () => {
+    try {
+      const response = await fetch('/api/admin/projects');
+  
+      if (!response.ok) {
+        console.error('API error:', response.status);
+        return;
+      }
+  
+      const text = await response.text();
+      if (!text) {
+        console.warn('Empty API response');
+        return;
+      }
+  
+      const data = JSON.parse(text);
+  
+      console.log(data);
+      
+      setProjectsData(prev => ({
+        ...prev,
+        ...data,
+        projects: data?.projects ?? prev.projects
+      }));
+  
+    } catch (error) {
+      console.error('Fetch error:', error);
     }
-  ];
+  };
 
   const filters = [
     { id: 'all', label: 'All Projects' },

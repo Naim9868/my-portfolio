@@ -43,7 +43,9 @@ const fetchProjectsData = async () => {
     }
 
     const data = JSON.parse(text);
-    console.log(data);
+
+    // console.log(data);
+    
     setProjectsData(prev => ({
       ...prev,
       ...data,
@@ -56,7 +58,7 @@ const fetchProjectsData = async () => {
 };
 
   const handleSave = async () => {
-    console.log(projectsData);
+    // console.log(projectsData);
     try {
       const response = await fetch('/api/admin/projects', {
         method: 'POST',
@@ -85,7 +87,7 @@ const fetchProjectsData = async () => {
         projects: [...prev.projects, project]
       }));
 
-      console.log(project);
+      // console.log(project);
       
       setNewProject({
         title: '',

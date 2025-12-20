@@ -5,20 +5,13 @@ import { FiPlus } from "react-icons/fi"
 
 export default function HeroEditor() {
   const [heroData, setHeroData] = useState({
-    name: 'Naim',
-    title: 'Full Stack Developer',
-    subtitle: 'UI/UX Enthusiast',
-    description: 'Hi! My name is Naimul Islam. Welcome to my page where I\'ve designed to showcase my skills and expertise that I\'ve accumulated over the years. Passionate about creating amazing user experiences with modern technologies. Specialized in React, Node.js, Next.js.',
-    tagline: 'Student of department of EEE, at Dhaka university of Engineering and Technology.',
-    ctaButtons: [
-      { text: 'View My Work', url: '#work', icon: 'FaArrowUpRightFromSquare', variant: 'primary' },
-      { text: 'Download CV', url: '/resume.pdf', icon: 'FaDownload', variant: 'secondary' }
-    ],
-    socialLinks: [
-      { platform: 'GitHub', url: 'https://github.com/Naim9868?tab=repositories', icon: 'FaGithub' },
-      { platform: 'LinkedIn', url: '#', icon: 'FaLinkedin' },
-      { platform: 'Twitter', url: '#', icon: 'FaTwitter' }
-    ],
+    name: '',
+    title: '',
+    subtitle: '',
+    description: '',
+    tagline: '',
+    ctaButtons: [],
+    socialLinks: [],
     enabled: true,
     showScrollIndicator: true
   });
@@ -39,6 +32,9 @@ export default function HeroEditor() {
     try {
       const response = await fetch('/api/admin/hero');
       const data = await response.json();
+
+      console.log(data);
+      
       if (data) {
         setHeroData(prev => ({
           ...prev,
