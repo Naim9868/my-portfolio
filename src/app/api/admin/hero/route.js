@@ -28,7 +28,7 @@ export async function GET() {
         description: 'Hi! My name is Naimul Islam. Welcome to my page where I\'ve designed to showcase my skills and expertise that I\'ve accumulated over the years. Passionate about creating amazing user experiences with modern technologies. Specialized in React, Node.js, Next.js.',
         tagline: 'Student of department of EEE, at Dhaka university of Engineering and Technology.',
         ctaButtons: [
-          { text: 'View My Work', url: '#work', icon: 'FaArrowUpRightFromSquare', variant: 'primary' },
+          { text: 'View My Work', url: '#work', icon: 'FaExternalLinkAlt', variant: 'primary' },
           { text: 'Download CV', url: '/resume.pdf', icon: 'FaDownload', variant: 'secondary' }
         ],
         socialLinks: [

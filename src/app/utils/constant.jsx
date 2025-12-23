@@ -26,17 +26,16 @@ import {
   FaTwitch,
   FaVimeo,
   FaQuora,
-} from "react-icons/fa";
+
 
 // Action / Utility icons
-import {
+
   FaDownload,
   FaExternalLinkAlt,
   FaArrowRight,
   FaArrowUp,
   FaArrowDown,
   FaArrowLeft,
-  FaArrowUpRightFromSquare,
   FaEnvelope,
   FaPhone,
   FaUser,
@@ -61,7 +60,7 @@ import {
   FaLink,
   FaPalette,
   FaMobile,
-  FaRoket
+  
 } from "react-icons/fa";
 
 export const ICON_MAP = {
@@ -100,7 +99,7 @@ export const ICON_MAP = {
   // ===== ACTION / CTA =====
   FaDownload,
   FaExternalLinkAlt,
-  FaArrowUpRightFromSquare,
+  
   FaArrowRight,
   FaArrowLeft,
   FaArrowUp,
@@ -131,5 +130,4 @@ export const ICON_MAP = {
   FaSearch,
   FaPalette,
   FaMobile,
-  FaRoket
 };

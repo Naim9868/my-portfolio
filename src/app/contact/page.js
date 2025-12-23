@@ -170,7 +170,7 @@ const ContactPage = () => {
             {title}
           </h1>
           <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-            Have a project in mind? Let's discuss how we can work together to bring your ideas to life.
+            Have a project in mind?  Let&apos;s discuss how we can work together to bring your ideas to life.
           </p>
         </motion.div>
 
@@ -178,7 +178,7 @@ const ContactPage = () => {
           {/* Contact Information */}
           <motion.div variants={itemVariants}>
             <h2 className="text-3xl  font-bold text-gray-800 dark:text-white mb-8">
-              Let's Talk
+               Let&apos;s Talk
             </h2>
 
             <div className="space-y-6 mb-8">

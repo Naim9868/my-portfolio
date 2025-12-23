@@ -46,6 +46,7 @@ const Profile = () => {
       console.error('Error fetching hero data:', error);
     }
   };
+  console.log(heroData);
 
   const { name, title, subtitle, description,
     tagline, ctaButtons, socialLinks, enabled, showScrollIndicator } = heroData;

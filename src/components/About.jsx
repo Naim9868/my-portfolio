@@ -70,10 +70,16 @@ export default function AnimatedAbout() {
                     group-hover:translate-x-2 group-hover:translate-y-2 group-hover:border-blue-400
                     transform transition-all duration-500 ease-in-out
                     `}>
-             {aboutData.imageUrl && (
-               <img
-                src={aboutData.imageUrl}
+             {aboutData.imageUrl && typeof aboutData.imageUrl === "string" && (
+              <Image
+                src={
+                  aboutData.imageUrl.startsWith("http")
+                    ? aboutData.imageUrl
+                    : `/${aboutData.imageUrl}`
+                }
                 alt="Profile"
+                width={400}
+                height={300}
                 className={`w-full h-full object-cover rounded-[10px]
                           opacity-90 group-hover:opacity-100
                           transform transition-all duration-500 ease-in-out
@@ -156,7 +162,7 @@ export default function AnimatedAbout() {
               transform transition-all duration-1000 delay-700 ease-out
               ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}
             `}>
-              {['JavaScript', 'TypeScript', 'React', 'Node.js', 'Python', 'AWS', 'MongoDB', 'Tailwind'].map((skill) => {
+              {aboutData.skills.map((skill) => {
                 return (
                  <span 
                   key={skill}

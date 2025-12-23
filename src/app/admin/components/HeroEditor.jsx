@@ -32,8 +32,6 @@ export default function HeroEditor() {
     try {
       const response = await fetch('/api/admin/hero');
       const data = await response.json();
-
-      console.log(data);
       
       if (data) {
         setHeroData(prev => ({
@@ -49,7 +47,7 @@ export default function HeroEditor() {
   };
 
   const handleSave = async () => {
-    console.log(heroData);
+    
     try {
       const response = await fetch('/api/admin/hero', {
         method: 'POST',
@@ -142,7 +140,7 @@ export default function HeroEditor() {
                   <div className="flex-1 grid grid-cols-3 gap-4">
                     <input
                       type="text"
-                      value={button.text}
+                      value={button.text ?? ""}
                       onChange={(e) => {
                         const newButtons = [...heroData.ctaButtons];
                         newButtons[index].text = e.target.value;
@@ -158,6 +156,18 @@ export default function HeroEditor() {
                       onChange={(e) => {
                         const newButtons = [...heroData.ctaButtons];
                         newButtons[index].url = e.target.value;
+                        setHeroData({ ...heroData, ctaButtons: newButtons });
+                      }}
+                      className="bg-gray-800 border border-gray-600 rounded-lg px-4 py-2 focus:outline-none focus:border-blue-500"
+                      placeholder="URL"
+                    />
+
+                     <input
+                      type="text"
+                      value={button.icon.trim()}
+                      onChange={(e) => {
+                        const newButtons = [...heroData.ctaButtons];
+                        newButtons[index].icon = e.target.value;
                         setHeroData({ ...heroData, ctaButtons: newButtons });
                       }}
                       className="bg-gray-800 border border-gray-600 rounded-lg px-4 py-2 focus:outline-none focus:border-blue-500"
@@ -191,6 +201,22 @@ export default function HeroEditor() {
                 </div>
               )
             })}
+
+            <button
+              onClick={() => {
+                const emptyCTAButtons = {
+                  text: " ", url: " ", icon: " ", variant: " "
+                }
+                setHeroData({
+                  ...heroData,
+                  ctaButtons: [...heroData.ctaButtons, emptyCTAButtons]
+                });
+              }}
+              className="p-2 text-gray-300 hover:text-green-400 text-2xl  transition-colors"
+            >
+              <FaPlus />
+            </button>
+
           </div>
         </div>
 

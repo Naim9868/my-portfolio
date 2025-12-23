@@ -81,7 +81,7 @@ export default function AdminLayout({ children }) {
       </div>
 
       {/* Sidebar */}
-      <div className={`fixed left-0 top-22 h-full bg-gray-800 border-r border-gray-700 transition-transform duration-300 z-30 ${
+      <div className={`fixed left-0 top-21 h-full bg-gray-800 border-r border-gray-700 transition-transform duration-300 z-30 ${
         sidebarOpen ? 'translate-x-0 w-64' : '-translate-x-full'
       }`}>
         <div className="p-6 border-b border-gray-700">
