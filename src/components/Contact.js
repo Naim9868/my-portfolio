@@ -2,8 +2,10 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { ICON_MAP } from '@/app/utils/constant';
 import { FaEnvelope, FaPhone, FaLinkedin } from 'react-icons/fa';
 import emailjs from "emailjs-com";
+
 export default function AnimatedContact() {
   const [isVisible, setIsVisible] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
@@ -16,10 +18,35 @@ export default function AnimatedContact() {
 
   const [isSending, setIsSending] = useState(false);
 
+   const [contactData, setContactData] = useState({
+       title: '',
+       description: "",
+       contactMethods: [],
+       formEnabled: true,
+       emailService: {},
+       enabled: true
+     });
+  
+     const {contactMethods, description, emailService, title, enabled, formEnabled} = contactData;
+  
+   useEffect(() => {
+      setIsVisible(true);
+       fetchContactData();
+     }, []);
+   
+     const fetchContactData = async () => {
+       try {
+         const response = await fetch('/api/admin/contact');
+         const data = await response.json();
+         
+         if (data) {
+           setContactData(data);
+         }
+       } catch (error) {
+         console.error('Error fetching contact data:', error);
+       }
+     };
 
-  useEffect(() => {
-    setIsVisible(true);
-  }, []);
 
   useEffect(() => {
     const handleResize = () => {
@@ -53,9 +80,9 @@ export default function AnimatedContact() {
     // Add your form submission logic here
 
     //emailjs setup.
-    const SERVICE_ID = "service_exxu8un";
-    const TEMPLATE_ID = "template_kwkeo1c";
-    const PUBLIC_KEY = "vR1VFMtGTt3fsxQ9f";
+    const SERVICE_ID = emailService.serviceId;
+    const TEMPLATE_ID = emailService.templateId;
+    const PUBLIC_KEY = emailService.publicKey;
 
     emailjs
       .send(SERVICE_ID, TEMPLATE_ID, formData, PUBLIC_KEY)
@@ -73,32 +100,6 @@ export default function AnimatedContact() {
 
   };
 
-  const contactMethods = [
-    {
-      icon: <FaEnvelope />,
-      title: 'Email',
-      value: 'naimislam9868@gmail.com',
-      link: 'https://mail.google.com/mail/?view=cm&fs=1&to=naimislam9868@gmail.com&su=Hello%20Naim&body=Hi,%20I%20want%20to%20connect!'
-    },
-    {
-      icon: <FaPhone />,
-      title: 'Phone',
-      value: '+8801521-529868',
-      link: 'tel:+8801521-529868'
-    },
-    // {
-    //   icon: '📍',
-    //   title: 'Location',
-    //   value: 'San Francisco, CA',
-    //   link: '#'
-    // },
-    {
-      icon: <FaLinkedin />,
-      title: 'LinkedIn',
-      value: 'in/yourprofile',
-      link: 'https://linkedin.com'
-    }
-  ];
 
   return (
     <div className="w-full bg-transparent flex  justify-center p-8 py-16">
@@ -108,13 +109,13 @@ export default function AnimatedContact() {
         <div className="text-center mb-16">
           <div className="overflow-hidden">
             <h2 className={`text-2xl lg:text-5xl md:text-3xl font-bold text-blue-400 bg-clip-text  transform transition-all duration-1000 ease-out ${isVisible ? 'translate-y-0 opacity-100' : '-translate-y-10 opacity-0'}`}>
-              Get In Touch
+             {title}
             </h2>
           </div>
           
           <div className="overflow-hidden">
             <p className={`text-xs md:text-xl text-gray-400 font-['courgette'] mt-2 md:mt-4 max-w-2xl mx-auto transform transition-all duration-1000 delay-300 ease-out ${isVisible ? 'translate-y-0 opacity-100' : '-translate-y-10 opacity-0'}`}>
-              Let&apos;s work together! I&apos;m always open to discussing new opportunities and creative projects.
+              {description}
             </p>
           </div>
         </div>
@@ -138,16 +139,18 @@ export default function AnimatedContact() {
 
             {/* Contact Methods */}
             <div className="space-y-2">
-              {contactMethods.map((method, index) => (
+              {contactMethods.map((method, index) => {
+                 const Icons = ICON_MAP[method.icon];
+                return (
                 <a
-                  key={method.title}
+                  key={index}
                   href={method.link}
                   target='_blank'
                   className={`flex items-center space-x-4 p-2 bg-white/5 backdrop-blur-sm  border border-white/30 rounded-lg hover:bg-white/20 hover:border-blue-400 transition-all duration-50 group transform smooth ${isVisible ? 'translate-x-0 opacity-100' : '-translate-x-10 opacity-0'}`}
                   style={{ transitionDelay: `${600 + index * 100}ms` }}
                 >
                   <div className="text-2xl group-hover:scale-110 transition-transform text-blue-400">
-                    {method.icon}
+                    {Icons && <Icons />}
                   </div>
                   <div className="flex-1">
                     <div className="text-white font-semibold">{method.title}</div>
@@ -157,7 +160,7 @@ export default function AnimatedContact() {
                     →
                   </div>
                 </a>
-              ))}
+              )})}
             </div>
           </div>
          } 

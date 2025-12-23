@@ -61,6 +61,24 @@ export async function POST() {
         { text: 'Download Resume', url: '/files/resume.pdf', icon: 'FaDownload' },
         { text: 'View Projects', url: '/projects', icon: 'FaProjectDiagram' }
       ],
+      aboutPage: {
+          subtitle: 'Passionate developer crafting digital experiences that make a difference',
+          description_1: "Hello! I'm Naim, a passionate full-stack developer with a love for creating beautiful and functional web applications. My journey in web development started 3 years ago, and I've been hooked ever since.",
+          description_2: "I specialize in modern JavaScript frameworks like React and Next.js, and I'm constantly learning new technologies to stay ahead in this rapidly evolving field.",
+          description_3: "When I'm not coding, you can find me exploring new design trends, contributing to open-source projects, or enjoying a good cup of coffee while planning my next project.",
+          skills: [
+              { name: 'Frontend Development', level: 90, icon: <FaCode /> },
+              { name: 'UI/UX Design', level: 85, icon: <FaPalette /> },
+              { name: 'Mobile Development', level: 30, icon: <FaMobile /> },
+              { name: 'DevOps & Deployment', level: 80, icon: <FaRocket /> },
+            ], 
+          stats: [
+            { number: '50+', label: 'Projects Completed' },
+            { number: '3+', label: 'Years Experience' },
+            { number: '100%', label: 'Client Satisfaction' },
+            { number: '24/7', label: 'Learning Mindset' }
+          ]
+        },
       enabled: true,
       showImage: true,
       showStats: true

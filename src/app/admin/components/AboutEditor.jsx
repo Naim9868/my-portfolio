@@ -1,23 +1,25 @@
+// /admin/about/page.jsx
 'use client';
 import { useState, useEffect } from 'react';
 import { FaSave, FaPlus, FaTrash, FaDownload, FaProjectDiagram } from 'react-icons/fa';
 
 export default function AboutEditor() {
   const [aboutData, setAboutData] = useState({
-    title: 'About Me',
-    description: "Hello! I'm Naim, a passionate full-stack developer with over 2 years of experience creating digital solutions that make a difference.",
-    bio: "I specialize in turning complex problems into simple, beautiful, and intuitive designs. When I'm not coding, you can find me exploring new technologies.",
-    imageUrl: './images/profile pic.jpg',
-    stats: [
-      { number: '10+', label: 'Projects Completed' },
-      { number: '2+', label: 'Years Experience' },
-      { number: '100%', label: 'Client Satisfaction' }
-    ],
-    skills: ['JavaScript', 'TypeScript', 'React', 'Node.js', 'Python', 'AWS', 'MongoDB', 'Tailwind'],
-    buttons: [
-      { text: 'Download Resume', url: '/files/resume.pdf', icon: 'FaDownload' },
-      { text: 'View Projects', url: '/projects', icon: 'FaProjectDiagram' }
-    ],
+    title: '',
+    description: '',
+    bio: '',
+    imageUrl: '',
+    stats: [],
+    skills: [],
+    buttons: [],
+    aboutPage: {
+      subtitle: '',
+      description_1: '',
+      description_2: '',
+      description_3: '',
+      skills: [],
+      stats: []
+    },
     enabled: true,
     showImage: true,
     showStats: true
@@ -26,7 +28,10 @@ export default function AboutEditor() {
   const [newSkill, setNewSkill] = useState('');
   const [newStat, setNewStat] = useState({ number: '', label: '' });
   const [newButton, setNewButton] = useState({ text: '', url: '', icon: 'FaDownload' });
-
+  const [newPageSkill, setNewPageSkill] = useState({ name: '', level: 0, icon: '' });
+  const [newPageStat, setNewPageStat] = useState({ number: '', label: '' });
+  
+  
   useEffect(() => {
     fetchAboutData();
   }, []);
@@ -333,6 +338,233 @@ export default function AboutEditor() {
                 </button>
               </div>
             ))}
+          </div>
+        </div>
+
+
+
+        {/* About Page Section */}
+
+
+        <div className="border border-gray-700 rounded-lg p-4">
+          <h3 className="text-lg font-semibold mb-4">About Page Content</h3>
+          
+          {/* About Page Subtitle */}
+          <div className="mb-4">
+            <label className="block text-sm font-medium mb-2">About Page Subtitle</label>
+            <input
+              type="text"
+              value={aboutData.aboutPage?.subtitle || ''}
+              onChange={(e) => setAboutData({
+                ...aboutData,
+                aboutPage: {
+                  ...aboutData.aboutPage,
+                  subtitle: e.target.value
+                }
+              })}
+              className="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-2 focus:outline-none focus:border-blue-500"
+              placeholder="About page subtitle"
+            />
+          </div>
+
+          {/* About Page Descriptions */}
+          <div className="space-y-4 mb-4">
+            <div>
+              <label className="block text-sm font-medium mb-2">Description 1</label>
+              <textarea
+                value={aboutData.aboutPage?.description_1 || ''}
+                onChange={(e) => setAboutData({
+                  ...aboutData,
+                  aboutPage: {
+                    ...aboutData.aboutPage,
+                    description_1: e.target.value
+                  }
+                })}
+                rows="3"
+                className="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-2 focus:outline-none focus:border-blue-500"
+                placeholder="First paragraph of about page"
+              />
+            </div>
+            
+            <div>
+              <label className="block text-sm font-medium mb-2">Description 2</label>
+              <textarea
+                value={aboutData.aboutPage?.description_2 || ''}
+                onChange={(e) => setAboutData({
+                  ...aboutData,
+                  aboutPage: {
+                    ...aboutData.aboutPage,
+                    description_2: e.target.value
+                  }
+                })}
+                rows="3"
+                className="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-2 focus:outline-none focus:border-blue-500"
+                placeholder="Second paragraph of about page"
+              />
+            </div>
+            
+            <div>
+              <label className="block text-sm font-medium mb-2">Description 3</label>
+              <textarea
+                value={aboutData.aboutPage?.description_3 || ''}
+                onChange={(e) => setAboutData({
+                  ...aboutData,
+                  aboutPage: {
+                    ...aboutData.aboutPage,
+                    description_3: e.target.value
+                  }
+                })}
+                rows="3"
+                className="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-2 focus:outline-none focus:border-blue-500"
+                placeholder="Third paragraph of about page"
+              />
+            </div>
+          </div>
+
+          {/* About Page Skills */}
+          <div className="mb-4">
+            <h4 className="font-semibold mb-3">About Page Skills</h4>
+            <div className="bg-gray-900 p-4 rounded-lg mb-4">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-3">
+                <input
+                  type="text"
+                  placeholder="Skill Name"
+                  value={newSkill.name || ''}
+                  onChange={(e) => setNewSkill({...newSkill, name: e.target.value})}
+                  className="bg-gray-800 border border-gray-600 rounded-lg px-4 py-2 focus:outline-none focus:border-blue-500"
+                />
+                <input
+                  type="number"
+                  min="0"
+                  max="100"
+                  placeholder="Level (0-100)"
+                  value={newSkill.level || ''}
+                  onChange={(e) => setNewSkill({...newSkill, level: parseInt(e.target.value) || 0})}
+                  className="bg-gray-800 border border-gray-600 rounded-lg px-4 py-2 focus:outline-none focus:border-blue-500"
+                />
+                <input
+                  type="text"
+                  placeholder="Icon (e.g., FaCode)"
+                  value={newSkill.icon || ''}
+                  onChange={(e) => setNewSkill({...newSkill, icon: e.target.value})}
+                  className="bg-gray-800 border border-gray-600 rounded-lg px-4 py-2 focus:outline-none focus:border-blue-500"
+                />
+              </div>
+              <button
+                onClick={() => {
+                  if (newSkill.name && newSkill.level) {
+                    setAboutData(prev => ({
+                      ...prev,
+                      aboutPage: {
+                        ...prev.aboutPage,
+                        skills: [...(prev.aboutPage?.skills || []), { ...newSkill }]
+                      }
+                    }));
+                    setNewSkill({ name: '', level: 0, icon: '' });
+                  }
+                }}
+                className="px-4 py-2 bg-green-600 hover:bg-green-700 rounded-lg flex items-center space-x-2 transition-colors"
+              >
+                <FaPlus />
+                <span>Add About Page Skill</span>
+              </button>
+            </div>
+
+            {/* Skills List */}
+            <div className="space-y-2">
+              {aboutData.aboutPage?.skills?.map((skill, index) => (
+                <div key={index} className="flex items-center justify-between bg-gray-800 p-3 rounded-lg">
+                  <div className="flex items-center space-x-4">
+                    <div className="font-medium">{skill.name}</div>
+                    <div className="text-sm text-blue-400">{skill.level}%</div>
+                    <div className="text-sm text-gray-400">{skill.icon}</div>
+                  </div>
+                  <button
+                    onClick={() => {
+                      const updatedSkills = aboutData.aboutPage.skills.filter((_, i) => i !== index);
+                      setAboutData(prev => ({
+                        ...prev,
+                        aboutPage: {
+                          ...prev.aboutPage,
+                          skills: updatedSkills
+                        }
+                      }));
+                    }}
+                    className="p-2 text-red-400 hover:text-red-300 transition-colors"
+                  >
+                    <FaTrash />
+                  </button>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* About Page Stats */}
+          <div>
+            <h4 className="font-semibold mb-3">About Page Stats</h4>
+            <div className="bg-gray-900 p-4 rounded-lg mb-4">
+              <div className="grid grid-cols-2 gap-4 mb-3">
+                <input
+                  type="text"
+                  placeholder="Stat Number"
+                  value={newStat.number || ''}
+                  onChange={(e) => setNewStat({...newStat, number: e.target.value})}
+                  className="bg-gray-800 border border-gray-600 rounded-lg px-4 py-2 focus:outline-none focus:border-blue-500"
+                />
+                <input
+                  type="text"
+                  placeholder="Stat Label"
+                  value={newStat.label || ''}
+                  onChange={(e) => setNewStat({...newStat, label: e.target.value})}
+                  className="bg-gray-800 border border-gray-600 rounded-lg px-4 py-2 focus:outline-none focus:border-blue-500"
+                />
+              </div>
+              <button
+                onClick={() => {
+                  if (newStat.number && newStat.label) {
+                    setAboutData(prev => ({
+                      ...prev,
+                      aboutPage: {
+                        ...prev.aboutPage,
+                        stats: [...(prev.aboutPage?.stats || []), { ...newStat }]
+                      }
+                    }));
+                    setNewStat({ number: '', label: '' });
+                  }
+                }}
+                className="px-4 py-2 bg-green-600 hover:bg-green-700 rounded-lg flex items-center space-x-2 transition-colors"
+              >
+                <FaPlus />
+                <span>Add About Page Stat</span>
+              </button>
+            </div>
+
+            {/* Stats List */}
+            <div className="space-y-2">
+              {aboutData.aboutPage?.stats?.map((stat, index) => (
+                <div key={index} className="flex items-center justify-between bg-gray-800 p-3 rounded-lg">
+                  <div className="flex items-center space-x-4">
+                    <div className="font-bold text-blue-400">{stat.number}</div>
+                    <div>{stat.label}</div>
+                  </div>
+                  <button
+                    onClick={() => {
+                      const updatedStats = aboutData.aboutPage.stats.filter((_, i) => i !== index);
+                      setAboutData(prev => ({
+                        ...prev,
+                        aboutPage: {
+                          ...prev.aboutPage,
+                          stats: updatedStats
+                        }
+                      }));
+                    }}
+                    className="p-2 text-red-400 hover:text-red-300 transition-colors"
+                  >
+                    <FaTrash />
+                  </button>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
 

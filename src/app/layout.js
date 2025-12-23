@@ -3,6 +3,7 @@ import "./globals.css";
 import { Carter_One, Courgette, Italianno, Roboto, Ubuntu } from "next/font/google";
 import InteractiveNavbar from '../components/InteractiveNavbar';
 import localFont from "next/font/local";
+import { AuthProvider } from "@/context/AuthContext";
 
 // 🧩 Import multiple fonts separately
 const carterOne = Carter_One({
@@ -58,7 +59,10 @@ export default function RootLayout({ children }) {
        
       >
          <InteractiveNavbar />
-        {children}
+
+        <AuthProvider>
+          {children}
+        </AuthProvider>
       </body>
     </html>
   );

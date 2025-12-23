@@ -1,10 +1,22 @@
 import { NextResponse } from 'next/server';
 import dbConnect from '@/app/lib/dbConnect';
 import { Contact } from '@/app/lib/models';
+import { adminAuthMiddleware } from '../middleware';
+
 
 // GET: Fetch contact data
 export async function GET() {
   try {
+
+     // Check authentication
+    // const auth = await adminAuthMiddleware(request);
+    // if (!auth.authorized) {
+    //   return NextResponse.json(
+    //     { error: auth.error },
+    //     { status: 401 }
+    //   );
+    // }
+
     await dbConnect();
     
     let contact = await Contact.findOne();
@@ -43,6 +55,24 @@ export async function GET() {
 // POST: Update contact data
 export async function POST(request) {
   try {
+
+    // Check authentication
+    // const auth = await adminAuthMiddleware(request);
+    // if (!auth.authorized) {
+    //   return NextResponse.json(
+    //     { error: auth.error },
+    //     { status: 401 }
+    //   );
+    // }
+
+    // // Check if user has admin role for write operations
+    // if (auth.user.role !== 'admin') {
+    //   return NextResponse.json(
+    //     { error: 'Insufficient permissions. Admin role required.' },
+    //     { status: 403 }
+    //   );
+    // }
+
     await dbConnect();
     const data = await request.json();
     

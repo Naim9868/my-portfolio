@@ -8,10 +8,42 @@ import { FaDownload,FaProjectDiagram } from 'react-icons/fa';
 
 export default function AnimatedAbout() {
   const [isVisible, setIsVisible] = useState(false);
+  const [aboutData, setAboutData] = useState({
+      title: '',
+      description: '',
+      bio: '',
+      imageUrl: '',
+      stats: [],
+      skills: [],
+      buttons: [],
+      enabled: true,
+      showImage: true,
+      showStats: true
+    });
 
   useEffect(() => {
     setIsVisible(true);
+    fetchAboutData();
   }, []);
+
+  const fetchAboutData = async()=>{
+    try{
+      const response = await fetch("/api/admin/about/");
+      const data = await response.json();
+      if(data){
+        setAboutData(prev =>({
+          ...prev,
+          ...data,
+          stats: data?.stats ?? prev.stats,
+          skills: data?.skills ?? prev.skills,
+          buttons: data?.buttons ?? prev.buttons
+        }));
+      }
+    }catch (error) {
+      console.error('Error fetching about data:', error);
+    }
+  }
+
 
   return (
     <div className="min-h-[1vh] w-full dark:bg-transparent flex items-center justify-center p-5 lg:gap-3">
@@ -38,14 +70,16 @@ export default function AnimatedAbout() {
                     group-hover:translate-x-2 group-hover:translate-y-2 group-hover:border-blue-400
                     transform transition-all duration-500 ease-in-out
                     `}>
-              <img
-                src="./images/profile pic.jpg"
+             {aboutData.imageUrl && (
+               <img
+                src={aboutData.imageUrl}
                 alt="Profile"
                 className={`w-full h-full object-cover rounded-[10px]
                           opacity-90 group-hover:opacity-100
                           transform transition-all duration-500 ease-in-out
                           `}
               />
+             )}
             </div>
           </div>
         </div>
@@ -62,7 +96,7 @@ export default function AnimatedAbout() {
               transform transition-all duration-1000 ease-out
               ${isVisible ? 'translate-x-0 opacity-100' : '-translate-x-full opacity-0'}
             `}>
-              About Me 
+              {aboutData.title} 
                
             </h2>
            {/* <motion.span
@@ -79,9 +113,10 @@ export default function AnimatedAbout() {
                 transform transition-all duration-1000 delay-200 ease-out
                 ${isVisible ? 'translate-x-0 opacity-100' : '-translate-x-full opacity-0'}
               `}>
-                Hello! I'm <span className="text-[#64ffda] font-semibold">Naim</span>, a passionate 
+                {/* Hello! I'm <span className="text-[#64ffda] font-semibold">Naim</span>, a passionate 
                 full-stack developer with over <span className="text-[#64ffda]">2 years</span> of experience 
-                creating digital solutions that make a difference.
+                creating digital solutions that make a difference. */}
+                {aboutData.description}
               </p>
             </div>
 
@@ -91,19 +126,16 @@ export default function AnimatedAbout() {
                 transform transition-all duration-1000 delay-400 ease-out
                 ${isVisible ? 'translate-x-0 opacity-100' : '-translate-x-full opacity-0'}
               `}>
-                I specialize in turning complex problems into simple, beautiful, and intuitive designs. 
-                When I'm not coding, you can find me exploring new technologies.
+                {/* I specialize in turning complex problems into simple, beautiful, and intuitive designs. 
+                When I'm not coding, you can find me exploring new technologies. */}
+                {aboutData.bio}
               </p>
             </div>
           </div>
 
           {/* Stats section */}
           <div className="grid grid-cols-3 md:grid-cols-3 gap-1 md:gap-4 p-1 md:p-0">
-            {[
-              { number: '10+', label: 'Projects Completed' },
-              { number: '2+', label: 'Years Experience' },
-              { number: '100%', label: 'Client Satisfaction' }
-            ].map((stat, index) => (
+            {aboutData.stats.map((stat, index) => (
               <div key={stat.label} className=" p-1 md:p-2 overflow-hidden">
                  {/* text-blue-400 dark:text-[#c0cef3] bg-[#0a192f] */}
                 <div className={`px-0 py-3 ring-1 ring-blue-400 text-center bg-gradient-to-r from-blue-600 to-purple-600 text-white
@@ -153,7 +185,7 @@ export default function AnimatedAbout() {
                shadow-none hover:shadow-[4px_5px_#64ffda]`}
                onClick={() => {
                 // Replace with your resume link
-                window.open('/files/resume.pdf', '_blank');
+                window.open(`${aboutData.buttons[0].url}`, '_blank');
                }}>
                 Download Resume <FaDownload className='ml-2 inline' />
               </button>
@@ -163,7 +195,7 @@ export default function AnimatedAbout() {
                transition-all transform hover:translate-y-[-2px] hover:translate-x-[-2px] 
                shadow-none hover:shadow-[4px_5px_#64ffda]`} onClick={() => {
                 // Replace with your projects link
-                window.open('/projects', '_blank');
+                window.open(`${aboutData.buttons[1].url}`, '_blank');
                }}>
                 View Projects <FaProjectDiagram className='ml-2 inline' />
               </button>

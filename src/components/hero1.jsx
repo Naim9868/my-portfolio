@@ -1,7 +1,7 @@
 "use client"
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { ICON_MAP } from '@/components/constant'
+import { ICON_MAP } from '@/app/utils/constant'
 
 const Profile = () => {
 

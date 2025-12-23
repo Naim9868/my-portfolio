@@ -165,7 +165,7 @@ const InteractiveNavbar = () => {
       <motion.div
         variants={navbarVariants}
         animate={isNavbarVisible ? "visible" : "hidden"}
-        className={`fixed top-1 left-0 w-full shadow-xl  dark:shadow-gray-300/20 bg-transparent backdrop-blur-2xl z-40 rounded-b-2xl dark:bg-transparent border-white/20 shadow-gray-400/20  ${navbarHeight}`}
+        className={`fixed top-1 left-0 w-full shadow-xl  dark:shadow-gray-300/20 bg-transparent backdrop-blur-sm z-40 rounded-b-2xl dark:bg-transparent border-white/20 shadow-gray-400/20  ${navbarHeight}`}
       >
         {/* Navigation Content */}
         <nav className="relative z-10">
@@ -210,7 +210,7 @@ const InteractiveNavbar = () => {
                           onMouseLeave={() => setActiveMenu(null)}
                           className="flex items-center space-x-1 px-3 py-2 rounded-lg transition-colors duration-200 hover:bg-black/15 dark:hover:bg-white/15"
                         >
-                          <span className="font-['courgette'] text-blue-400 dark:text-blue-400">
+                          <span className="text-blue-400 dark:text-blue-400"> {/*font-['courgette'] */}
                             <Link href={`/${index === 0 ? "" : item.id}`}>
                               {item.label}
                             </Link>

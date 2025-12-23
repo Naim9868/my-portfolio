@@ -7,6 +7,7 @@ import AboutEditor from './components/AboutEditor';
 import ProjectEditor from './components/ProjectEditor';
 import ContactEditor from './components/ContactEditor';
 import ComponentManager from './components/ConponentManager';
+import SkillsEditor from './components/SkillsEditor';
 import { FaEye, FaCog , FaEdit, FaToggleOn, FaDatabase, FaPuzzlePiece,FaProjectDiagram} from 'react-icons/fa';
 
 function DashboardContent() {
@@ -60,6 +61,8 @@ function DashboardContent() {
         return <FooterEditor />;
       case 'settings':
         return <ComponentManager />;
+      case 'skills':
+        return <SkillsEditor />;
       default:
         return (
           <div className="space-y-8 pt-20">

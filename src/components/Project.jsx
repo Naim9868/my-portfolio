@@ -1,86 +1,55 @@
 // components/AnimatedProjects.jsx
 'use client';
 import Image from 'next/image';
+import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 
 export default function AnimatedProjects() {
   const [isVisible, setIsVisible] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [projectsData, setProjectsData] = useState({
+    projects: [],
+    enabled: true,
+    showAllButton: true
+  });
   
   useEffect(() => {
     setIsVisible(true);
     setIsMobile(window.innerWidth < 768);
+    fetchProjectsData();
   }, []);
 
-  const projects = [
-    {
-      id: 1,
-      title: "E-Commerce Platform",
-      description: "Full-stack e-commerce with real-time inventory and payment integration.",
-      image: "/api/placeholder/400/250",
-      technologies: ["React", "Node.js", "MongoDB", "Stripe"],
-      category: "Full Stack",
-      liveUrl: "#",
-      githubUrl: "#",
-      featured: true
-    },
-    {
-      id: 2,
-      title: "Task Management App",
-      description: "Collaborative task management with real-time updates.",
-      image: "/api/placeholder/400/250",
-      technologies: ["Vue.js", "Firebase", "Tailwind", "PWA"],
-      category: "Frontend",
-      liveUrl: "#",
-      githubUrl: "#",
-      featured: false
-    },
-    {
-      id: 3,
-      title: "AI Content Generator",
-      description: "AI-powered content generation with NLP and templates.",
-      image: "",
-      technologies: ["Python", "FastAPI", "React", "OpenAI"],
-      category: "AI/ML",
-      liveUrl: "#",
-      githubUrl: "#",
-      featured: true
-    },
-    {
-      id: 4,
-      title: "Fitness Tracking App",
-      description: "Mobile fitness app with workout plans and progress tracking.",
-      image: "/api/placeholder/400/250",
-      technologies: ["React Native", "GraphQL", "Node.js", "MongoDB"],
-      category: "Mobile",
-      liveUrl: "#",
-      githubUrl: "#",
-      featured: false
-    },
-    {
-      id: 5,
-      title: "Blockchain Explorer",
-      description: "Cryptocurrency explorer with real-time analytics.",
-      image: "/api/placeholder/400/250",
-      technologies: ["Next.js", "Ethereum", "Web3", "Chart.js"],
-      category: "Web3",
-      liveUrl: "#",
-      githubUrl: "#",
-      featured: true
-    },
-    {
-      id: 6,
-      title: "Social Media Dashboard",
-      description: "Analytics dashboard with insights and scheduling.",
-      image: "/api/placeholder/400/250",
-      technologies: ["Angular", "D3.js", "Express", "PostgreSQL"],
-      category: "Analytics",
-      liveUrl: "#",
-      githubUrl: "#",
-      featured: false
+  const fetchProjectsData = async () => {
+  try {
+    const response = await fetch('/api/admin/projects');
+
+    if (!response.ok) {
+      console.error('API error:', response.status);
+      return;
     }
-  ];
+
+    const text = await response.text();
+    if (!text) {
+      console.warn('Empty API response');
+      return;
+    }
+
+    const data = JSON.parse(text);
+    
+    setProjectsData(prev => ({
+      ...prev,
+      ...data,
+      projects: data?.projects ?? prev.projects
+    }));
+
+  } catch (error) {
+    console.error('Fetch error:', error);
+  }
+};
+
+const { projects } = projectsData;
+
 
   // Fallback component for missing images
   const ImageWithFallback = ({ src, alt, className, fallbackText }) => {
@@ -135,7 +104,10 @@ export default function AnimatedProjects() {
 
         {/* Projects Grid - Optimized for Mobile */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
-          {projects.map((project, index) => (
+          {projects.map((project, index) => {
+            if(index > 5) return null;
+
+          return (
             <div
               key={project.id}
               className={`
@@ -221,13 +193,14 @@ export default function AnimatedProjects() {
                 </a>
               </div>
             </div>
-          ))}
+          )})}
         </div>
 
         {/* View More Projects Button */}
         <div className="text-center mt-8 md:mt-12">
           <button className="px-6 py-3 border border-blue-400 text-blue-400 rounded-lg hover:bg-blue-400/10 transition-all duration-300 transform hover:scale-105">
-            View All Projects
+          
+            <Link href="/projects" >  View All Projects</Link>
           </button>
         </div>
       </div>

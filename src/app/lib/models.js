@@ -23,6 +23,14 @@ const StatSchema = new mongoose.Schema({
   label: String
 });
 
+//about page schemas
+const SkillSchema = new mongoose.Schema({
+  name: String,
+  level: Number,
+  icon: String
+});
+
+
 // Button Schema
 const ButtonSchema = new mongoose.Schema({
   text: String,
@@ -56,6 +64,29 @@ const EmailServiceSchema = new mongoose.Schema({
   serviceId: String,
   templateId: String,
   publicKey: String
+});
+
+// Individual Skill Schema
+const SkillItemSchema = new mongoose.Schema({
+  name: String,
+  icon: String,
+  level: { type: Number, min: 0, max: 100 },
+  color: String
+});
+
+// Skill Category Schema
+const SkillCategorySchema = new mongoose.Schema({
+  title: String,
+  skills: [SkillItemSchema]
+});
+
+const AboutPageSchema = new mongoose.Schema({
+  subtitle: String,
+  description_1: {type: String, default: "Hello! I'm Naim, a passionate full-stack developer with a love for creating beautiful and functional web applications. My journey in web development started 3 years ago, and I've been hooked ever since."},
+  description_2: {type: String, default: "I specialize in modern JavaScript frameworks like React and Next.js, and I'm constantly learning new technologies to stay ahead in this rapidly evolving field."},
+  description_3: {type: String, default: "When I'm not coding, you can find me exploring new design trends, contributing to open-source projects, or enjoying a good cup of coffee while planning my next project."},
+  skills: [SkillSchema],
+  stats: [StatSchema]
 });
 
 // Individual Component Schemas
@@ -95,6 +126,7 @@ const AboutSchema = new mongoose.Schema({
   stats: [StatSchema],
   skills: [String],
   buttons: [ButtonSchema],
+  aboutPage: AboutPageSchema,
   enabled: { type: Boolean, default: true },
   showImage: { type: Boolean, default: true },
   showStats: { type: Boolean, default: true },
@@ -118,17 +150,67 @@ const ContactSchema = new mongoose.Schema({
   updatedAt: { type: Date, default: Date.now }
 }, { collection: 'contact' });
 
+// Skills Page Schema
+const SkillsSchema = new mongoose.Schema({
+  title: { type: String, default: 'Skills & Technologies' },
+  subtitle: { type: String, default: 'Technologies and tools I use to bring ideas to life' },
+  learningText: { type: String, default: 'I believe in continuous learning and regularly explore new technologies and frameworks to enhance my skills and stay up-to-date with industry trends.' },
+  skillCategories: [SkillCategorySchema],
+  enabled: { type: Boolean, default: true },
+  updatedAt: { type: Date, default: Date.now }
+}, { collection: 'skills' });
+
+// User Schema for Admin Authentication
+const UserSchema = new mongoose.Schema({
+  username: { 
+    type: String, 
+    required: true, 
+    unique: true 
+  },
+  password: { 
+    type: String, 
+    required: true 
+  },
+  email: { 
+    type: String, 
+    required: true, 
+    unique: true 
+  },
+  role: { 
+    type: String, 
+    enum: ['admin', 'editor'], 
+    default: 'editor' 
+  },
+  isActive: { 
+    type: Boolean, 
+    default: true 
+  },
+  lastLogin: { 
+    type: Date 
+  },
+  createdAt: { 
+    type: Date, 
+    default: Date.now 
+  }
+}, { collection: 'users' });
+
+
+
 // Create or get models
 const Footer = mongoose.models.Footer || mongoose.model('Footer', FooterSchema);
 const Hero = mongoose.models.Hero || mongoose.model('Hero', HeroSchema);
 const About = mongoose.models.About || mongoose.model('About', AboutSchema);
 const Projects = mongoose.models.Projects || mongoose.model('Projects', ProjectsSchema);
 const Contact = mongoose.models.Contact || mongoose.model('Contact', ContactSchema);
+const Skills = mongoose.models.Skills || mongoose.model('Skills', SkillsSchema);
+const User = mongoose.models.User || mongoose.model('User', UserSchema);
 
 export {
   Footer,
   Hero,
   About,
   Projects,
-  Contact
+  Contact,
+  Skills,
+  User
 };

@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { FaEnvelope, FaCopy, FaTimes } from 'react-icons/fa';
 
-const Footer_2 = () => {
+const Footer_2 = ({Email}) => {
   const [showEmailModal, setShowEmailModal] = useState(false);
-  const email = 'naimislam9868@gmail.com';
+  const email = Email;
+
 
   const handleEmailClick = () => {
     setShowEmailModal(true);
@@ -28,7 +29,7 @@ const Footer_2 = () => {
   };
 
   const openEmailClient = () => {
-    window.open(`https://mail.google.com/mail/?view=cm&fs=1&to=naimislam9868@gmail.com&su=Hello%20Naim&body=Hi,%20I%20want%20to%20connect!`);
+    window.open(`https://mail.google.com/mail/?view=cm&fs=1&to=${email}&su=Hello%20Naim&body=Hi,%20I%20want%20to%20connect!`);
     setShowEmailModal(false);
   };
 

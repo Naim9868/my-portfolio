@@ -1,10 +1,21 @@
 import { NextResponse } from 'next/server';
 import dbConnect from '@/app/lib/dbConnect';
 import { Footer } from '@/app/lib/models';
-
+import { adminAuthMiddleware } from '../middleware';
 // GET: Fetch footer data
 export async function GET() {
   try {
+    
+    // Check authentication
+    // const auth = await adminAuthMiddleware(request);
+    // if (!auth.authorized) {
+    //   return NextResponse.json(
+    //     { error: auth.error },
+    //     { status: 401 }
+    //   );
+    // }
+
+
     await dbConnect();
     
     let footer = await Footer.findOne();
@@ -47,6 +58,25 @@ export async function GET() {
 // POST: Update footer data
 export async function POST(request) {
   try {
+
+    // Check authentication
+    // const auth = await adminAuthMiddleware(request);
+    // if (!auth.authorized) {
+    //   return NextResponse.json(
+    //     { error: auth.error },
+    //     { status: 401 }
+    //   );
+    // }
+
+    // // Check if user has admin role for write operations
+    // if (auth.user.role !== 'admin') {
+    //   return NextResponse.json(
+    //     { error: 'Insufficient permissions. Admin role required.' },
+    //     { status: 403 }
+    //   );
+    // }
+
+
     await dbConnect();
     const data = await request.json();
     
@@ -82,6 +112,24 @@ export async function POST(request) {
 // PUT: Partial update
 export async function PUT(request) {
   try {
+
+    // Check authentication
+    // const auth = await adminAuthMiddleware(request);
+    // if (!auth.authorized) {
+    //   return NextResponse.json(
+    //     { error: auth.error },
+    //     { status: 401 }
+    //   );
+    // }
+
+    // // Check if user has admin role for write operations
+    // if (auth.user.role !== 'admin') {
+    //   return NextResponse.json(
+    //     { error: 'Insufficient permissions. Admin role required.' },
+    //     { status: 403 }
+    //   );
+    // }
+
     await dbConnect();
     const updates = await request.json();
     
@@ -114,6 +162,25 @@ export async function PUT(request) {
 // DELETE: Delete footer (not recommended, but available)
 export async function DELETE() {
   try {
+
+    // Check authentication
+    // const auth = await adminAuthMiddleware(request);
+    // if (!auth.authorized) {
+    //   return NextResponse.json(
+    //     { error: auth.error },
+    //     { status: 401 }
+    //   );
+    // }
+
+    // // Check if user has admin role for write operations
+    // if (auth.user.role !== 'admin') {
+    //   return NextResponse.json(
+    //     { error: 'Insufficient permissions. Admin role required.' },
+    //     { status: 403 }
+    //   );
+    // }
+
+
     await dbConnect();
     
     const result = await Footer.deleteOne({});

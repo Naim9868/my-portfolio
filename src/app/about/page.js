@@ -1,9 +1,67 @@
-
 "use client"
 import { motion } from 'framer-motion';
-import { FaCode, FaPalette, FaMobile, FaRocket } from 'react-icons/fa';
+import { useState, useEffect } from 'react';
+// import { FaCode, FaPalette, FaMobile, FaRocket } from 'react-icons/fa';
+import { ICON_MAP } from '@/app/utils/constant';
 
 const AboutPage = () => {
+  const [aboutPageData, setAboutPageData] = useState({
+    subtitle: 'Passionate developer crafting digital experiences that make a difference',
+    description_1: "Hello! I'm Naim, a passionate full-stack developer with a love for creating beautiful and functional web applications. My journey in web development started 3 years ago, and I've been hooked ever since.",
+    description_2: "I specialize in modern JavaScript frameworks like React and Next.js, and I'm constantly learning new technologies to stay ahead in this rapidly evolving field.",
+    description_3: "When I'm not coding, you can find me exploring new design trends, contributing to open-source projects, or enjoying a good cup of coffee while planning my next project.",
+    skills: [
+      { name: 'Frontend Development', level: 90, icon: 'FaCode' },
+      { name: 'UI/UX Design', level: 85, icon: 'FaPalette' },
+      { name: 'Mobile Development', level: 75, icon: 'FaMobile' },
+      { name: 'DevOps & Deployment', level: 80, icon: 'FaRocket' }
+    ],
+    stats: [
+      { number: '50+', label: 'Projects Completed' },
+      { number: '3+', label: 'Years Experience' },
+      { number: '100%', label: 'Client Satisfaction' },
+      { number: '24/7', label: 'Learning Mindset' }
+    ]
+  });
+
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    fetchAboutData();
+  }, []);
+
+  const fetchAboutData = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      
+      const response = await fetch('/api/admin/about');
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
+      const data = await response.json();
+      
+      console.log('Fetched about data:', data);
+      
+      if (data && data.aboutPage) {
+        setAboutPageData(prev => ({
+          ...prev,
+          ...data.aboutPage,
+          skills: data.aboutPage?.skills || prev.skills,
+          stats: data.aboutPage?.stats || prev.stats
+        }));
+      }
+    } catch (error) {
+      console.error('Error fetching about data:', error);
+      setError('Failed to load about page content. Using default data.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -23,12 +81,40 @@ const AboutPage = () => {
     }
   };
 
-  const skills = [
-    { name: 'Frontend Development', level: 90, icon: <FaCode /> },
-    { name: 'UI/UX Design', level: 85, icon: <FaPalette /> },
-    { name: 'Mobile Development', level: 75, icon: <FaMobile /> },
-    { name: 'DevOps & Deployment', level: 80, icon: <FaRocket /> },
-  ];
+  // Map icon strings to actual components
+  // const iconMap = {
+  //   FaCode: <FaCode />,
+  //   FaPalette: <FaPalette />,
+  //   FaMobile: <FaMobile />,
+  //   FaRocket: <FaRocket />
+  // };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <div className="w-16 h-16 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <p className="text-gray-600 dark:text-gray-300">Loading about page...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error && !aboutPageData.description_1) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center p-8 bg-red-50 dark:bg-red-900/20 rounded-xl">
+          <p className="text-red-600 dark:text-red-400 mb-4">{error}</p>
+          <button 
+            onClick={fetchAboutData}
+            className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+          >
+            Retry
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <motion.div
@@ -47,7 +133,7 @@ const AboutPage = () => {
             About Me
           </h1>
           <p className="text-xl font-['courgette'] text-gray-500 dark:text-gray-300 max-w-3xl mx-auto">
-            Passionate developer crafting digital experiences that make a difference
+            {aboutPageData.subtitle || 'Passionate developer crafting digital experiences'}
           </p>
         </motion.div>
 
@@ -58,21 +144,9 @@ const AboutPage = () => {
               My Journey
             </h2>
             <div className="space-y-4 font-['courgette'] text-gray-400 dark:text-gray-300 leading-relaxed">
-              <p>
-                Hello! I'm Naim, a passionate full-stack developer with a love for 
-                creating beautiful and functional web applications. My journey in 
-                web development started 3 years ago, and I've been hooked ever since.
-              </p>
-              <p>
-                I specialize in modern JavaScript frameworks like React and Next.js, 
-                and I'm constantly learning new technologies to stay ahead in this 
-                rapidly evolving field.
-              </p>
-              <p>
-                When I'm not coding, you can find me exploring new design trends, 
-                contributing to open-source projects, or enjoying a good cup of coffee 
-                while planning my next project.
-              </p>
+              <p>{aboutPageData.description_1}</p>
+              <p>{aboutPageData.description_2}</p>
+              <p>{aboutPageData.description_3}</p>
             </div>
 
             {/* Stats */}
@@ -80,12 +154,7 @@ const AboutPage = () => {
               variants={itemVariants}
               className="grid grid-cols-2 gap-6 mt-8"
             >
-              {[
-                { number: '50+', label: 'Projects Completed' },
-                { number: '3+', label: 'Years Experience' },
-                { number: '100%', label: 'Client Satisfaction' },
-                { number: '24/7', label: 'Learning Mindset' },
-              ].map((stat, index) => (
+              {aboutPageData.stats?.map((stat, index) => (
                 <div key={index} className="text-center p-4 bg-white dark:bg-gray-800 rounded-xl shadow-lg">
                   <div className="text-2xl font-bold text-blue-600 dark:text-blue-400">{stat.number}</div>
                   <div className="text-sm font-['courgette'] text-gray-600 dark:text-gray-300">{stat.label}</div>
@@ -100,7 +169,11 @@ const AboutPage = () => {
               My Skills
             </h3>
             <div className="space-y-6">
-              {skills.map((skill, index) => (
+              {aboutPageData.skills?.map((skill, index) => {
+                
+                const Icon = ICON_MAP[skill.icon]
+
+                return (
                 <motion.div
                   key={index}
                   whileHover={{ scale: 1.02 }}
@@ -109,7 +182,7 @@ const AboutPage = () => {
                   <div className="flex items-center justify-between mb-3">
                     <div className="flex items-center space-x-3">
                       <div className="text-blue-600 dark:text-blue-400 text-lg">
-                        {skill.icon}
+                        {Icon && <Icon />}
                       </div>
                       <span className="font-semibold font-['courgette'] text-gray-700 dark:text-white">
                         {skill.name}
@@ -128,10 +201,31 @@ const AboutPage = () => {
                     />
                   </div>
                 </motion.div>
-              ))}
+              )})}
             </div>
           </motion.div>
         </div>
+
+        {/* Debug button - remove in production */}
+        {/* {process.env.NODE_ENV === 'development' && (
+          <div className="mt-8 p-4 bg-gray-100 dark:bg-gray-800 rounded-lg">
+            <button 
+              onClick={fetchAboutData}
+              className="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors mr-4"
+            >
+              Reload Data
+            </button>
+            <button 
+              onClick={() => console.log('Current data:', aboutPageData)}
+              className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+            >
+              Log Data
+            </button>
+            <pre className="mt-4 text-xs bg-gray-500 p-4 rounded overflow-auto">
+              {JSON.stringify(aboutPageData, null, 2)}
+            </pre>
+          </div>
+        )} */}
       </div>
     </motion.div>
   );

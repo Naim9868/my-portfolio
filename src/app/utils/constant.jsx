@@ -59,6 +59,9 @@ import {
   FaSave,
   FaSearch,
   FaLink,
+  FaPalette,
+  FaMobile,
+  FaRoket
 } from "react-icons/fa";
 
 export const ICON_MAP = {
@@ -126,4 +129,7 @@ export const ICON_MAP = {
   FaPlus,
   FaSave,
   FaSearch,
+  FaPalette,
+  FaMobile,
+  FaRoket
 };

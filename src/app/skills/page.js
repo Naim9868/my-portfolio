@@ -1,8 +1,10 @@
 "use client"
 import { motion } from 'framer-motion';
+import { useState, useEffect } from 'react';
 import { 
   FaReact, FaNodeJs, FaPython, FaDatabase, 
-  FaAws, FaDocker, FaGitAlt, FaFigma 
+  FaAws, FaDocker, FaGitAlt, FaFigma,
+  FaCode, FaPalette, FaMobile, FaRocket 
 } from 'react-icons/fa';
 import { 
   SiNextdotjs, SiTailwindcss, SiTypescript, 
@@ -10,6 +12,40 @@ import {
 } from 'react-icons/si';
 
 const SkillsPage = () => {
+  const [skillsData, setSkillsData] = useState({
+    title: 'Skills & Technologies',
+    subtitle: 'Technologies and tools I use to bring ideas to life',
+    learningText: 'I believe in continuous learning and regularly explore new technologies and frameworks to enhance my skills and stay up-to-date with industry trends.',
+    skillCategories: []
+  });
+
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchSkillsData();
+  }, []);
+
+  const fetchSkillsData = async () => {
+    try {
+      setLoading(true);
+      const response = await fetch('/api/admin/skills');
+      const data = await response.json();
+      
+      if (data) {
+        setSkillsData({
+          title: data.title || 'Skills & Technologies',
+          subtitle: data.subtitle || 'Technologies and tools I use to bring ideas to life',
+          learningText: data.learningText || 'I believe in continuous learning...',
+          skillCategories: data.skillCategories || []
+        });
+      }
+    } catch (error) {
+      console.error('Error fetching skills data:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -29,36 +65,38 @@ const SkillsPage = () => {
     }
   };
 
-  const skillCategories = [
-    {
-      title: 'Frontend',
-      skills: [
-        { name: 'React', icon: <FaReact />, level: 90, color: 'text-blue-400' },
-        { name: 'Next.js', icon: <SiNextdotjs />, level: 85, color: 'text-black dark:text-white' },
-        { name: 'TypeScript', icon: <SiTypescript />, level: 80, color: 'text-blue-600' },
-        { name: 'JavaScript', icon: <SiJavascript />, level: 95, color: 'text-yellow-400' },
-        { name: 'Tailwind CSS', icon: <SiTailwindcss />, level: 90, color: 'text-cyan-400' },
-      ]
-    },
-    {
-      title: 'Backend',
-      skills: [
-        { name: 'Node.js', icon: <FaNodeJs />, level: 85, color: 'text-green-500' },
-        { name: 'Python', icon: <FaPython />, level: 75, color: 'text-yellow-500' },
-        { name: 'MongoDB', icon: <SiMongodb />, level: 80, color: 'text-green-600' },
-        { name: 'PostgreSQL', icon: <SiPostgresql />, level: 70, color: 'text-blue-700' },
-      ]
-    },
-    {
-      title: 'Tools & Others',
-      skills: [
-        { name: 'Git', icon: <FaGitAlt />, level: 90, color: 'text-orange-500' },
-        { name: 'Docker', icon: <FaDocker />, level: 70, color: 'text-blue-500' },
-        { name: 'AWS', icon: <FaAws />, level: 65, color: 'text-orange-400' },
-        { name: 'Figma', icon: <FaFigma />, level: 75, color: 'text-purple-500' },
-      ]
-    }
-  ];
+  // Icon mapping
+  const iconMap = {
+    FaReact: <FaReact />,
+    FaNodeJs: <FaNodeJs />,
+    FaPython: <FaPython />,
+    FaDatabase: <FaDatabase />,
+    FaAws: <FaAws />,
+    FaDocker: <FaDocker />,
+    FaGitAlt: <FaGitAlt />,
+    FaFigma: <FaFigma />,
+    FaCode: <FaCode />,
+    FaPalette: <FaPalette />,
+    FaMobile: <FaMobile />,
+    FaRocket: <FaRocket />,
+    SiNextdotjs: <SiNextdotjs />,
+    SiTailwindcss: <SiTailwindcss />,
+    SiTypescript: <SiTypescript />,
+    SiMongodb: <SiMongodb />,
+    SiPostgresql: <SiPostgresql />,
+    SiJavascript: <SiJavascript />
+  };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <div className="w-16 h-16 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <p className="text-gray-600 dark:text-gray-300">Loading skills...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <motion.div
@@ -74,16 +112,16 @@ const SkillsPage = () => {
           className="text-center mb-16"
         >
           <h1 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-6">
-            Skills & Technologies
+            {skillsData.title}
           </h1>
           <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-            Technologies and tools I use to bring ideas to life
+            {skillsData.subtitle}
           </p>
         </motion.div>
 
         {/* Skills Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {skillCategories.map((category, categoryIndex) => (
+          {skillsData.skillCategories.map((category, categoryIndex) => (
             <motion.div
               key={categoryIndex}
               variants={itemVariants}
@@ -102,8 +140,8 @@ const SkillsPage = () => {
                     className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors duration-200"
                   >
                     <div className="flex items-center space-x-3">
-                      <div className={`text-2xl ${skill.color}`}>
-                        {skill.icon}
+                      <div className={`text-2xl ${skill.color || 'text-blue-400'}`}>
+                        {iconMap[skill.icon] || <FaCode />}
                       </div>
                       <span className="font-semibold text-gray-800 dark:text-white">
                         {skill.name}
@@ -139,8 +177,7 @@ const SkillsPage = () => {
             Always Learning
           </h3>
           <p className="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-            I believe in continuous learning and regularly explore new technologies 
-            and frameworks to enhance my skills and stay up-to-date with industry trends.
+            {skillsData.learningText}
           </p>
         </motion.div>
       </div>

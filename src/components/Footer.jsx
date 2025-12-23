@@ -1,35 +1,64 @@
 import React from 'react';
 import Footer_2 from './EmailModal';
-import { 
-  FaGithub, 
-  FaLinkedin, 
-  FaWhatsapp, 
-  FaFacebook, 
-  FaTwitter,
-  FaEnvelope,
-  FaPhone,
-  FaMapMarkerAlt,
-  FaHeart
-} from 'react-icons/fa';
+import { ICON_MAP } from '../app/utils/constant';
+import { useState, useEffect } from 'react';
+import { FaHeart, FaMapMarkerAlt } from 'react-icons/fa';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
 
-  // Social media links (replace with your actual links)
-  const socialLinks = {
-    github: 'https://github.com/Naim9868',
-    linkedin: 'https://linkedin.com/in/md-naimul-islam',
-    whatsapp: 'https://wa.me/+8801521529868',
-    facebook: 'https://facebook.com/naim-islam',
-    twitter: 'https://twitter.com/yourusername'
-  };
+  // Social media links (actual links)
+   const [footerData, setFooterData] = useState({
+      name: 'Md. Naimul Islam',
+      tagline: 'Building amazing web experiences with React and modern technologies. Let\'s create something extraordinary together.',
+      phone: '+8801521-529868',
+      location: 'Dhaka, Bangladesh',
+      email: 'naimislam9868@gmail.com',
+      copyrightText: 'Designed & Build by N@im',
+      socialLinks: [
+        { platform: 'GitHub', url: 'https://github.com/Naim9868', icon: 'FaGithub', color: '#333' },
+        { platform: 'LinkedIn', url: 'https://linkedin.com/in/md-naimul-islam', icon: 'FaLinkedin', color: '#0077b5' },
+        { platform: 'WhatsApp', url: 'https://wa.me/+8801521529868', icon: 'FaWhatsapp', color: '#25D366' },
+        { platform: 'Facebook', url: 'https://facebook.com/naim-islam', icon: 'FaFacebook', color: '#4267B2' },
+        { platform: 'Twitter', url: 'https://twitter.com/yourusername', icon: 'FaTwitter', color: '#1DA1F2' }
+      ],
+      enabled: true,
+      showPhone: true,
+      showLocation: true,
+      showEmail: true
+    });
+ 
+    const { name, tagline, phone, location, email, copyrightText, socialLinks } = footerData;
+    
+    const FaPhone = ICON_MAP['FaPhone'];
+
+    useEffect(() => {
+        fetchFooterData();
+      }, []);
+    
+      const fetchFooterData = async () => {
+        try {
+          const response = await fetch('/api/admin/footer');
+          const data = await response.json();
+          if (data) {
+            setFooterData(prev =>({
+              ...prev,
+              ...data,
+              socialLinks: data?.socialLinks ?? prev.socialLinks
+            }));
+          }
+        } catch (error) {
+          console.error('Error fetching footer data:', error);
+        }
+      };
+    
 
   const handleEmailClick = () => {
-    const email = 'naimislam9868@gmail.com';
+    const Email = email;
   };
 
   const handlePhoneClick = () => {
-    window.location.href = 'tel:+88801521529868';
+    window.location.href = `tel:${phone}`;
   };
 
   return (
@@ -41,30 +70,29 @@ const Footer = () => {
           {/* Company/Personal Info */}
           <div className="md:col-span-2">
             <h3 className="text-xl font-bold text-blue-400 mb-4 relative pb-2">
-               Md. Naimul Islam
+               {name}
               <span className="absolute bottom-0 left-0 w-12 h-0.5 bg-blue-400"></span>
             </h3>
             <p className="text-[#c0cef3] font-['courgette'] mb-6 leading-relaxed">
-              Building amazing web experiences with React and modern technologies. 
-              Let's create something extraordinary together.
+              {tagline}
             </p>
             <div className="space-y-3">
               <div 
                 className="flex items-center space-x-3 text-gray-300 hover:text-blue-400 cursor-pointer transition-colors duration-300"
                 onClick={handleEmailClick}
               >
-                  <Footer_2 />
+                  <Footer_2 Email={email} />
               </div>
               <div 
                 className="flex items-center space-x-3 text-gray-300 hover:text-blue-400 cursor-pointer transition-colors duration-300"
                 onClick={handlePhoneClick}
                >
                    <FaPhone className="text-blue-400 text-lg" />
-                   <span>+880 1521-529868</span>
+                   <span>{phone}</span>
                 </div>
               <div className="flex items-center space-x-3 text-gray-300">
                 <FaMapMarkerAlt className="text-blue-400 text-lg" />
-                <span>Dhaka, Bangladesh</span>
+                <span>{location}</span>
               </div>
             </div>
           </div>
@@ -99,65 +127,25 @@ const Footer = () => {
               Follow me on social media for updates and networking.
             </p>
             <div className="flex flex-wrap justify-center gap-3">
-              {/* GitHub */}
-              <a 
-                href={socialLinks.github}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="GitHub"
-                className="group relative w-12 h-12 flex items-center justify-center bg-blue-400/10 border-2 border-blue-400 rounded-full text-blue-400 transition-all duration-300 hover:transform hover:-translate-y-1 hover:shadow-lg hover:shadow-blue-400/25"
-              >
-                <FaGithub className="text-xl relative z-10 group-hover:text-white transition-colors duration-300" />
-                <div className="absolute inset-0 bg-blue-400 rounded-full scale-0 group-hover:scale-100 transition-transform duration-300"></div>
-              </a>
+              {socialLinks.map((social, index) => {
 
-              {/* LinkedIn */}
-              <a 
-                href={socialLinks.linkedin}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="LinkedIn"
-                className="group relative w-12 h-12 flex items-center justify-center bg-blue-400/10 border-2 border-blue-400 rounded-full text-blue-400 transition-all duration-300 hover:transform hover:-translate-y-1 hover:shadow-lg hover:shadow-[#0077b5]/25"
-              >
-                <FaLinkedin className="text-xl relative z-10 group-hover:text-white transition-colors duration-300" />
-                <div className="absolute inset-0 bg-[#0077b5] rounded-full scale-0 group-hover:scale-100 transition-transform duration-300"></div>
-              </a>
+                const SocialIcon = ICON_MAP[social.icon]
 
-              {/* WhatsApp */}
-              <a 
-                href={socialLinks.whatsapp}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="WhatsApp"
-                className="group relative w-12 h-12 flex items-center justify-center bg-blue-400/10 border-2 border-blue-400 rounded-full text-blue-400 transition-all duration-300 hover:transform hover:-translate-y-1 hover:shadow-lg hover:shadow-[#25D366]/25"
-              >
-                <FaWhatsapp className="text-xl relative z-10 group-hover:text-white transition-colors duration-300" />
-                <div className="absolute inset-0 bg-[#25D366] rounded-full scale-0 group-hover:scale-100 transition-transform duration-300"></div>
-              </a>
-
-              {/* Facebook */}
-              <a 
-                href={socialLinks.facebook}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Facebook"
-                className="group relative w-12 h-12 flex items-center justify-center bg-blue-400/10 border-2 border-blue-400 rounded-full text-blue-400 transition-all duration-300 hover:transform hover:-translate-y-1 hover:shadow-lg hover:shadow-[#4267B2]/25"
-              >
-                <FaFacebook className="text-xl relative z-10 group-hover:text-white transition-colors duration-300" />
-                <div className="absolute inset-0 bg-[#4267B2] rounded-full scale-0 group-hover:scale-100 transition-transform duration-300"></div>
-              </a>
-
-              {/* Twitter */}
-              <a 
-                href={socialLinks.twitter}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Twitter"
-                className="group relative w-12 h-12 flex items-center justify-center bg-blue-400/10 border-2 border-blue-400 rounded-full text-blue-400 transition-all duration-300 hover:transform hover:-translate-y-1 hover:shadow-lg hover:shadow-[#1DA1F2]/25"
-              >
-                <FaTwitter className="text-xl relative z-10 group-hover:text-white transition-colors duration-300" />
-                <div className="absolute inset-0 bg-[#1DA1F2] rounded-full scale-0 group-hover:scale-100 transition-transform duration-300"></div>
-              </a>
+                return(
+                <a 
+                  key={index}
+                  href={socialLinks.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="GitHub"
+                  className="group relative w-12 h-12 flex items-center justify-center bg-blue-400/10 border-2 border-blue-400 rounded-full text-blue-400 transition-all duration-300 hover:transform hover:-translate-y-1 hover:shadow-lg hover:shadow-blue-400/25"
+                >
+                  {SocialIcon && <SocialIcon className="text-xl relative z-10 group-hover:text-white transition-colors duration-300" />} 
+                  <div className="absolute inset-0 bg-blue-400 rounded-full scale-0 group-hover:scale-100 transition-transform duration-300"></div>
+                </a>
+                )
+              })}
+           
             </div>
         </div>
     </div>
@@ -168,7 +156,7 @@ const Footer = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row justify-center items-center space-y-4 md:space-y-0">
             <div className="flex items-center space-x-1 text-[#c0cef3] font-['courgette']">
-              <span>&copy; {currentYear} Designed & Build by N@im</span>
+              <span>&copy; {currentYear} {copyrightText}</span>
               <FaHeart className="text-red-500 animate-pulse" />
               {/* <span>using React & Tailwind CSS</span> */}
             </div>

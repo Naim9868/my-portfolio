@@ -5,6 +5,17 @@ import { Hero } from '@/app/lib/models';
 // GET: Fetch hero data
 export async function GET() {
   try {
+
+      // Check authentication
+    // const auth = await adminAuthMiddleware(request);
+    // if (!auth.authorized) {
+    //   return NextResponse.json(
+    //     { error: auth.error },
+    //     { status: 401 }
+    //   );
+    // }
+
+
     await dbConnect();
     
     let hero = await Hero.findOne();
@@ -45,6 +56,25 @@ export async function GET() {
 // POST: Update hero data
 export async function POST(request) {
   try {
+
+       // Check authentication
+    // const auth = await adminAuthMiddleware(request);
+    // if (!auth.authorized) {
+    //   return NextResponse.json(
+    //     { error: auth.error },
+    //     { status: 401 }
+    //   );
+    // }
+
+    // // Check if user has admin role for write operations
+    // if (auth.user.role !== 'admin') {
+    //   return NextResponse.json(
+    //     { error: 'Insufficient permissions. Admin role required.' },
+    //     { status: 403 }
+    //   );
+    // }
+
+    
     await dbConnect();
     const data = await request.json();
     

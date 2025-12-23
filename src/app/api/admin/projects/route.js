@@ -5,6 +5,17 @@ import { Projects } from '@/app/lib/models';
 // GET: Fetch projects data
 export async function GET() {
   try {
+
+       // Check authentication
+    // const auth = await adminAuthMiddleware(request);
+    // if (!auth.authorized) {
+    //   return NextResponse.json(
+    //     { error: auth.error },
+    //     { status: 401 }
+    //   );
+    // }
+
+
     await dbConnect();
     
     let projectsData = await Projects.findOne();
@@ -55,6 +66,25 @@ export async function GET() {
 // POST: Update projects data
 export async function POST(request) {
   try {
+
+    // Check authentication
+    // const auth = await adminAuthMiddleware(request);
+    // if (!auth.authorized) {
+    //   return NextResponse.json(
+    //     { error: auth.error },
+    //     { status: 401 }
+    //   );
+    // }
+
+    // // Check if user has admin role for write operations
+    // if (auth.user.role !== 'admin') {
+    //   return NextResponse.json(
+    //     { error: 'Insufficient permissions. Admin role required.' },
+    //     { status: 403 }
+    //   );
+    // }
+
+
     await dbConnect();
     const data = await request.json();
     
@@ -98,6 +128,25 @@ export async function POST(request) {
 // PUT: Add a single project
 export async function PUT(request) {
   try {
+
+    // Check authentication
+    // const auth = await adminAuthMiddleware(request);
+    // if (!auth.authorized) {
+    //   return NextResponse.json(
+    //     { error: auth.error },
+    //     { status: 401 }
+    //   );
+    // }
+
+    // // Check if user has admin role for write operations
+    // if (auth.user.role !== 'admin') {
+    //   return NextResponse.json(
+    //     { error: 'Insufficient permissions. Admin role required.' },
+    //     { status: 403 }
+    //   );
+    // }
+
+
     await dbConnect();
     const newProject = await request.json();
     
@@ -138,6 +187,25 @@ export async function PUT(request) {
 // DELETE: Delete a project
 export async function DELETE(request) {
   try {
+
+    // Check authentication
+    // const auth = await adminAuthMiddleware(request);
+    // if (!auth.authorized) {
+    //   return NextResponse.json(
+    //     { error: auth.error },
+    //     { status: 401 }
+    //   );
+    // }
+
+    // // Check if user has admin role for write operations
+    // if (auth.user.role !== 'admin') {
+    //   return NextResponse.json(
+    //     { error: 'Insufficient permissions. Admin role required.' },
+    //     { status: 403 }
+    //   );
+    // }
+
+
     await dbConnect();
     const { projectId } = await request.json();
     
