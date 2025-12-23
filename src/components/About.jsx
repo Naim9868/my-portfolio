@@ -57,16 +57,16 @@ export default function AnimatedAbout() {
         <div className="flex justify-center order-1 md:order-2 items-center p-8">
           <div className="relative w-64 h-64 md:w-80 md:h-80 group">
             {/* The offset frame / border behind image */}
-            <div className={`absolute inset-0 rounded-[10px] border border-blue-400 
-                            transform translate-x-[-10px] translate-y-[-10px] 
+            <div className={`absolute inset-0 rounded-[5px] border border-blue-400 
+                            transform translate-x-[-8px] translate-y-[-8px] 
                             transition-all duration-500 ease-in-out
                             group-hover:translate-x-[-10px] group-hover:translate-y-[-10px]
                             group-hover:border-blue-400
-                            group-hover:shadow-[0_0_20px_#3b82f6,0_0_40px_#64ffda]
+                            group-hover:shadow-[0_0_15px_#3b82f6,0_0_30px_#64ffda]
                             -z-10" `}/>
 
             {/* The image container (on top) */}
-            <div className={`relative w-full h-full overflow-hidden rounded-[10px] shadow-lg
+            <div className={`relative w-full h-full overflow-hidden rounded-[5px] shadow-lg
                     group-hover:translate-x-2 group-hover:translate-y-2 group-hover:border-blue-400
                     transform transition-all duration-500 ease-in-out
                     `}>
@@ -80,8 +80,8 @@ export default function AnimatedAbout() {
                 alt="Profile"
                 width={400}
                 height={300}
-                className={`w-full h-full object-cover rounded-[10px]
-                          opacity-90 group-hover:opacity-100
+                className={`w-full h-full object-cover rounded-[5px]
+                          opacity-95 group-hover:opacity-100
                           transform transition-all duration-500 ease-in-out
                           `}
               />
