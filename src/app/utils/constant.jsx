@@ -63,6 +63,8 @@ import {
   
 } from "react-icons/fa";
 
+import { SiLeetcode } from "react-icons/si";
+
 export const ICON_MAP = {
   // ===== SOCIAL =====
   FaGithub,
@@ -130,4 +132,5 @@ export const ICON_MAP = {
   FaSearch,
   FaPalette,
   FaMobile,
+  SiLeetcode
 };

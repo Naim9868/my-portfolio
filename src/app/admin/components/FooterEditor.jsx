@@ -1,6 +1,7 @@
 'use client';
 import { useState, useEffect } from 'react';
-import { FaSave, FaPlus, FaTrash, FaGithub, FaLinkedin, FaWhatsapp, FaFacebook, FaTwitter, FaEnvelope, FaPhone, FaMapMarkerAlt } from 'react-icons/fa';
+import { FaSave,FaLink , FaPlus, FaTrash, FaGithub, FaLinkedin, FaWhatsapp, FaFacebook, FaTwitter, FaEnvelope, FaPhone, FaMapMarkerAlt } from 'react-icons/fa';
+import { SiLeetcode } from 'react-icons/si';
 
 export default function FooterEditor() {
   const [footerData, setFooterData] = useState({
@@ -11,7 +12,7 @@ export default function FooterEditor() {
     email: 'naimislam9868@gmail.com',
     copyrightText: 'Designed & Build by N@im',
     socialLinks: [
-      { platform: 'GitHub', url: 'https://github.com/Naim9868', icon: 'FaGithub', color: '#333' },
+      { platform: 'GitHub', url: 'https://github.com/Naim9868', icon: 'FaGithub', color: '#000000ff' },
       { platform: 'LinkedIn', url: 'https://linkedin.com/in/md-naimul-islam', icon: 'FaLinkedin', color: '#0077b5' },
       { platform: 'WhatsApp', url: 'https://wa.me/+8801521529868', icon: 'FaWhatsapp', color: '#25D366' },
       { platform: 'Facebook', url: 'https://facebook.com/naim-islam', icon: 'FaFacebook', color: '#4267B2' },
@@ -26,7 +27,7 @@ export default function FooterEditor() {
   const [newSocialLink, setNewSocialLink] = useState({
     platform: '',
     url: '',
-    icon: 'FaGithub',
+    icon: '',
     color: '#333'
   });
 
@@ -73,7 +74,7 @@ export default function FooterEditor() {
         ...prev,
         socialLinks: [...prev.socialLinks, { ...newSocialLink }]
       }));
-      setNewSocialLink({ platform: '', url: '', icon: 'FaGithub', color: '#333' });
+      setNewSocialLink({ platform: '', url: '', icon: '', color: '#333' });
     }
   };
 
@@ -84,6 +85,22 @@ export default function FooterEditor() {
     }));
   };
 
+  const moveSkill = (index, direction) => {
+    const category = footerData.socialLinks;
+    if (!category || category.length <= 1) return;
+    
+    if ((direction === 'up' && index === 0) || 
+        (direction === 'down' && index === category.length - 1)) {
+      return;
+    }
+    
+    const newIndex = direction === 'up' ? index - 1 : index + 1;
+    const updatedLinks = [...footerData.socialLinks];
+    [updatedLinks[index], updatedLinks[newIndex]] = [updatedLinks[newIndex], updatedLinks[index]];
+    
+    setFooterData(prev => ({ ...prev, socialLinks: updatedLinks }));
+  };
+
   const iconOptions = [
     { value: 'FaGithub', label: 'GitHub' },
     { value: 'FaLinkedin', label: 'LinkedIn' },
@@ -92,7 +109,10 @@ export default function FooterEditor() {
     { value: 'FaTwitter', label: 'Twitter' },
     { value: 'FaEnvelope', label: 'Email' },
     { value: 'FaPhone', label: 'Phone' },
-    { value: 'FaMapMarkerAlt', label: 'Location' }
+    { value: 'FaMapMarkerAlt', label: 'Location' },
+    { value: 'SiLeetcode', label: 'LeetCode' },
+    { value: 'FaLink', label: 'another link' }
+    
   ];
 
   return (
@@ -251,6 +271,22 @@ export default function FooterEditor() {
             {footerData.socialLinks.map((link, index) => (
               <div key={index} className="flex items-center justify-between bg-gray-900 p-3 rounded-lg">
                 <div className="flex items-center space-x-4">
+                  <div className="flex flex-col space-y-1">
+                          <button
+                            onClick={() => moveSkill( index, 'up')}
+                            disabled={index === 0}
+                            className={`p-1 text-xs ${index === 0 ? 'opacity-50 cursor-not-allowed' : 'hover:bg-gray-800'}`}
+                          >
+                            ↑
+                          </button>
+                          <button
+                            onClick={() => moveSkill(index, 'down')}
+                            disabled={index === footerData.socialLinks.length - 1}
+                            className={`p-1 text-xs ${index === footerData.socialLinks.length - 1 ? 'opacity-50 cursor-not-allowed' : 'hover:bg-gray-800'}`}
+                          >
+                            ↓
+                          </button>
+                      </div>
                   <div className="w-8 h-8 rounded-full flex items-center justify-center" style={{backgroundColor: link.color}}>
                     {getIconComponent(link.icon)}
                   </div>
@@ -305,8 +341,10 @@ function getIconComponent(iconName) {
     FaTwitter: <FaTwitter />,
     FaEnvelope: <FaEnvelope />,
     FaPhone: <FaPhone />,
-    FaMapMarkerAlt: <FaMapMarkerAlt />
+    FaMapMarkerAlt: <FaMapMarkerAlt />,
+    SiLeetcode: <SiLeetcode />,
+    FaLink: <FaLink />
   };
   
-  return icons[iconName] || <FaGithub />;
+  return icons[iconName] || <FaLink />;
 }

@@ -65,7 +65,7 @@ export default function AdminLayout({ children }) {
   return (
     <div className="min-h-screen bg-gray-900 text-white">
       {/* Mobile Header */}
-      <div className="lg:hidden fixed top-10 left-0 right-0 bg-gray-800 border-b border-gray-700 z-40">
+      <div className="lg:hidden fixed top-0 left-0 right-0 bg-gray-800 border-b border-gray-700 z-40">
         <div className="flex items-center justify-between p-4">
           <button
             onClick={() => setSidebarOpen(!sidebarOpen)}
@@ -81,7 +81,7 @@ export default function AdminLayout({ children }) {
       </div>
 
       {/* Sidebar */}
-      <div className={`fixed left-0 top-21 h-full bg-gray-800 border-r border-gray-700 transition-transform duration-300 z-30 ${
+      <div className={`fixed left-0 top-16 md:top-21 h-full bg-gray-800 border-r border-gray-700 transition-transform duration-300 z-30 ${
         sidebarOpen ? 'translate-x-0 w-64' : '-translate-x-full'
       }`}>
         <div className="p-6 border-b border-gray-700">

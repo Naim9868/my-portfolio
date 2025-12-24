@@ -157,6 +157,7 @@ export default function AnimatedAbout() {
 
           {/* Skills tags */}
           <div className="overflow-hidden pt-2 md:p-0 md:m-0">
+            <h3 className="text-blue-400 text-xl md:text-2xl font-bold mb-4">Skills</h3>
             <div className={`
               flex flex-wrap gap-3 p-2
               transform transition-all duration-1000 delay-700 ease-out
