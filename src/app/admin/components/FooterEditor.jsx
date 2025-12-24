@@ -1,6 +1,6 @@
 'use client';
 import { useState, useEffect } from 'react';
-import { FaSave,FaLink , FaPlus, FaTrash, FaGithub, FaLinkedin, FaWhatsapp, FaFacebook, FaTwitter, FaEnvelope, FaPhone, FaMapMarkerAlt } from 'react-icons/fa';
+import { FaSave, FaLink, FaPlus, FaTrash, FaGithub, FaLinkedin, FaWhatsapp, FaFacebook, FaTwitter, FaEnvelope, FaPhone, FaMapMarkerAlt, FaEdit } from 'react-icons/fa';
 import { SiLeetcode } from 'react-icons/si';
 
 export default function FooterEditor() {
@@ -12,7 +12,7 @@ export default function FooterEditor() {
     email: 'naimislam9868@gmail.com',
     copyrightText: 'Designed & Build by N@im',
     socialLinks: [
-      { platform: 'GitHub', url: 'https://github.com/Naim9868', icon: 'FaGithub', color: '#000000ff' },
+      { platform: 'GitHub', url: 'https://github.com/Naim9868', icon: 'FaGithub', color: '#0000ff' },
       { platform: 'LinkedIn', url: 'https://linkedin.com/in/md-naimul-islam', icon: 'FaLinkedin', color: '#0077b5' },
       { platform: 'WhatsApp', url: 'https://wa.me/+8801521529868', icon: 'FaWhatsapp', color: '#25D366' },
       { platform: 'Facebook', url: 'https://facebook.com/naim-islam', icon: 'FaFacebook', color: '#4267B2' },
@@ -27,9 +27,11 @@ export default function FooterEditor() {
   const [newSocialLink, setNewSocialLink] = useState({
     platform: '',
     url: '',
-    icon: '',
-    color: '#333'
+    icon: 'FaLink',
+    color: '#333333'
   });
+
+  const [editIndex, setEditIndex] = useState(null);
 
   useEffect(() => {
     fetchFooterData();
@@ -40,7 +42,7 @@ export default function FooterEditor() {
       const response = await fetch('/api/admin/footer');
       const data = await response.json();
       if (data) {
-        setFooterData(prev =>({
+        setFooterData(prev => ({
           ...prev,
           ...data,
           socialLinks: data?.socialLinks ?? prev.socialLinks
@@ -59,7 +61,7 @@ export default function FooterEditor() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(footerData)
       });
-      
+
       if (response.ok) {
         alert('Footer saved successfully!');
       }
@@ -68,14 +70,41 @@ export default function FooterEditor() {
     }
   };
 
+
   const addSocialLink = () => {
-    if (newSocialLink.platform && newSocialLink.url) {
+    if (!newSocialLink.platform || !newSocialLink.url) return;
+
+    if (editIndex !== null) {
+      // UPDATE
+      const updated = [...footerData.socialLinks];
+      updated[editIndex] = newSocialLink;
+
       setFooterData(prev => ({
         ...prev,
-        socialLinks: [...prev.socialLinks, { ...newSocialLink }]
+        socialLinks: updated
       }));
-      setNewSocialLink({ platform: '', url: '', icon: '', color: '#333' });
+
+      setEditIndex(null);
+    } else {
+      // ADD
+      setFooterData(prev => ({
+        ...prev,
+        socialLinks: [...prev.socialLinks, newSocialLink]
+      }));
     }
+
+    setNewSocialLink({
+      platform: '',
+      url: '',
+      icon: 'FaLink',
+      color: '#333333'
+    });
+  };
+
+
+  const editSocialLink = (index) => {
+    setNewSocialLink(footerData.socialLinks[index]);
+    setEditIndex(index);
   };
 
   const removeSocialLink = (index) => {
@@ -88,16 +117,16 @@ export default function FooterEditor() {
   const moveSkill = (index, direction) => {
     const category = footerData.socialLinks;
     if (!category || category.length <= 1) return;
-    
-    if ((direction === 'up' && index === 0) || 
-        (direction === 'down' && index === category.length - 1)) {
+
+    if ((direction === 'up' && index === 0) ||
+      (direction === 'down' && index === category.length - 1)) {
       return;
     }
-    
+
     const newIndex = direction === 'up' ? index - 1 : index + 1;
     const updatedLinks = [...footerData.socialLinks];
     [updatedLinks[index], updatedLinks[newIndex]] = [updatedLinks[newIndex], updatedLinks[index]];
-    
+
     setFooterData(prev => ({ ...prev, socialLinks: updatedLinks }));
   };
 
@@ -112,7 +141,7 @@ export default function FooterEditor() {
     { value: 'FaMapMarkerAlt', label: 'Location' },
     { value: 'SiLeetcode', label: 'LeetCode' },
     { value: 'FaLink', label: 'another link' }
-    
+
   ];
 
   return (
@@ -136,17 +165,17 @@ export default function FooterEditor() {
             <input
               type="text"
               value={footerData.name}
-              onChange={(e) => setFooterData({...footerData, name: e.target.value})}
+              onChange={(e) => setFooterData({ ...footerData, name: e.target.value })}
               className="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-2 focus:outline-none focus:border-blue-500"
             />
           </div>
-          
+
           <div>
             <label className="block text-sm font-medium mb-2">Copyright Text</label>
             <input
               type="text"
               value={footerData.copyrightText}
-              onChange={(e) => setFooterData({...footerData, copyrightText: e.target.value})}
+              onChange={(e) => setFooterData({ ...footerData, copyrightText: e.target.value })}
               className="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-2 focus:outline-none focus:border-blue-500"
             />
           </div>
@@ -157,7 +186,7 @@ export default function FooterEditor() {
           <label className="block text-sm font-medium mb-2">Tagline</label>
           <textarea
             value={footerData.tagline}
-            onChange={(e) => setFooterData({...footerData, tagline: e.target.value})}
+            onChange={(e) => setFooterData({ ...footerData, tagline: e.target.value })}
             rows="3"
             className="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-2 focus:outline-none focus:border-blue-500"
           />
@@ -169,46 +198,46 @@ export default function FooterEditor() {
             <input
               type="checkbox"
               checked={footerData.showPhone}
-              onChange={(e) => setFooterData({...footerData, showPhone: e.target.checked})}
+              onChange={(e) => setFooterData({ ...footerData, showPhone: e.target.checked })}
               className="rounded"
             />
             <label className="text-sm">Show Phone</label>
             <input
               type="text"
               value={footerData.phone}
-              onChange={(e) => setFooterData({...footerData, phone: e.target.value})}
+              onChange={(e) => setFooterData({ ...footerData, phone: e.target.value })}
               className="flex-1 bg-gray-700 border border-gray-600 rounded-lg px-4 py-2 focus:outline-none focus:border-blue-500"
             />
           </div>
-          
+
           <div className="flex items-center space-x-2">
             <input
               type="checkbox"
               checked={footerData.showEmail}
-              onChange={(e) => setFooterData({...footerData, showEmail: e.target.checked})}
+              onChange={(e) => setFooterData({ ...footerData, showEmail: e.target.checked })}
               className="rounded"
             />
             <label className="text-sm">Show Email</label>
             <input
               type="email"
               value={footerData.email}
-              onChange={(e) => setFooterData({...footerData, email: e.target.value})}
+              onChange={(e) => setFooterData({ ...footerData, email: e.target.value })}
               className="flex-1 bg-gray-700 border border-gray-600 rounded-lg px-4 py-2 focus:outline-none focus:border-blue-500"
             />
           </div>
-          
+
           <div className="flex items-center space-x-2">
             <input
               type="checkbox"
               checked={footerData.showLocation}
-              onChange={(e) => setFooterData({...footerData, showLocation: e.target.checked})}
+              onChange={(e) => setFooterData({ ...footerData, showLocation: e.target.checked })}
               className="rounded"
             />
             <label className="text-sm">Show Location</label>
             <input
               type="text"
               value={footerData.location}
-              onChange={(e) => setFooterData({...footerData, location: e.target.value})}
+              onChange={(e) => setFooterData({ ...footerData, location: e.target.value })}
               className="flex-1 bg-gray-700 border border-gray-600 rounded-lg px-4 py-2 focus:outline-none focus:border-blue-500"
             />
           </div>
@@ -217,7 +246,7 @@ export default function FooterEditor() {
         {/* Social Links */}
         <div>
           <h3 className="text-lg font-semibold mb-4">Social Media Links</h3>
-          
+
           {/* Add New Link Form */}
           <div className="bg-gray-900 p-4 rounded-lg mb-4">
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
@@ -225,44 +254,45 @@ export default function FooterEditor() {
                 type="text"
                 placeholder="Platform (e.g., GitHub)"
                 value={newSocialLink.platform}
-                onChange={(e) => setNewSocialLink({...newSocialLink, platform: e.target.value})}
+                onChange={(e) => setNewSocialLink({ ...newSocialLink, platform: e.target.value })}
                 className="bg-gray-800 border border-gray-600 rounded-lg px-4 py-2 focus:outline-none focus:border-blue-500"
               />
-              
+
               <input
                 type="url"
                 placeholder="URL"
                 value={newSocialLink.url}
-                onChange={(e) => setNewSocialLink({...newSocialLink, url: e.target.value})}
+                onChange={(e) => setNewSocialLink({ ...newSocialLink, url: e.target.value })}
                 className="bg-gray-800 border border-gray-600 rounded-lg px-4 py-2 focus:outline-none focus:border-blue-500"
               />
-              
+
               <select
                 value={newSocialLink.icon}
-                onChange={(e) => setNewSocialLink({...newSocialLink, icon: e.target.value})}
+                onChange={(e) => setNewSocialLink({ ...newSocialLink, icon: e.target.value })}
                 className="bg-gray-800 border border-gray-600 rounded-lg px-4 py-2 focus:outline-none focus:border-blue-500"
               >
+                <option value="">Select Icon</option>
                 {iconOptions.map(option => (
                   <option key={option.value} value={option.value}>
                     {option.label}
                   </option>
                 ))}
               </select>
-              
+
               <input
                 type="color"
                 value={newSocialLink.color}
-                onChange={(e) => setNewSocialLink({...newSocialLink, color: e.target.value})}
+                onChange={(e) => setNewSocialLink({ ...newSocialLink, color: e.target.value })}
                 className="w-full h-10 rounded-lg cursor-pointer"
               />
             </div>
-            
+
             <button
               onClick={addSocialLink}
-              className="px-4 py-2 bg-green-600 hover:bg-green-700 rounded-lg flex items-center space-x-2 transition-colors"
+              className="px-4 py-2 bg-green-600 hover:bg-green-700 rounded-lg"
             >
               <FaPlus />
-              <span>Add Social Link</span>
+              {editIndex !== null ? 'Update Social Link' : 'Add Social Link'}
             </button>
           </div>
 
@@ -272,22 +302,22 @@ export default function FooterEditor() {
               <div key={index} className="flex items-center justify-between bg-gray-900 p-3 rounded-lg">
                 <div className="flex items-center space-x-4">
                   <div className="flex flex-col space-y-1">
-                          <button
-                            onClick={() => moveSkill( index, 'up')}
-                            disabled={index === 0}
-                            className={`p-1 text-xs ${index === 0 ? 'opacity-50 cursor-not-allowed' : 'hover:bg-gray-800'}`}
-                          >
-                            ↑
-                          </button>
-                          <button
-                            onClick={() => moveSkill(index, 'down')}
-                            disabled={index === footerData.socialLinks.length - 1}
-                            className={`p-1 text-xs ${index === footerData.socialLinks.length - 1 ? 'opacity-50 cursor-not-allowed' : 'hover:bg-gray-800'}`}
-                          >
-                            ↓
-                          </button>
-                      </div>
-                  <div className="w-8 h-8 rounded-full flex items-center justify-center" style={{backgroundColor: link.color}}>
+                    <button
+                      onClick={() => moveSkill(index, 'up')}
+                      disabled={index === 0}
+                      className={`p-1 text-xs ${index === 0 ? 'opacity-50 cursor-not-allowed' : 'hover:bg-gray-800'}`}
+                    >
+                      ↑
+                    </button>
+                    <button
+                      onClick={() => moveSkill(index, 'down')}
+                      disabled={index === footerData.socialLinks.length - 1}
+                      className={`p-1 text-xs ${index === footerData.socialLinks.length - 1 ? 'opacity-50 cursor-not-allowed' : 'hover:bg-gray-800'}`}
+                    >
+                      ↓
+                    </button>
+                  </div>
+                  <div className="w-8 h-8 rounded-full flex items-center justify-center" style={{ backgroundColor: link.color }}>
                     {getIconComponent(link.icon)}
                   </div>
                   <div>
@@ -295,13 +325,23 @@ export default function FooterEditor() {
                     <div className="text-sm text-gray-400 truncate max-w-xs">{link.url}</div>
                   </div>
                 </div>
-                
+
+               <div>
+                 <button
+                  onClick={() => editSocialLink(index)}
+                  className="p-2 text-blue-400 hover:text-blue-300"
+                >
+                  <FaEdit />
+                </button>
+
+
                 <button
                   onClick={() => removeSocialLink(index)}
                   className="p-2 text-red-400 hover:text-red-300 transition-colors"
                 >
                   <FaTrash />
                 </button>
+                </div>
               </div>
             ))}
           </div>
@@ -313,12 +353,12 @@ export default function FooterEditor() {
             <h4 className="font-medium">Footer Status</h4>
             <p className="text-sm text-gray-400">Show or hide the footer section</p>
           </div>
-          
+
           <label className="relative inline-flex items-center cursor-pointer">
             <input
               type="checkbox"
               checked={footerData.enabled}
-              onChange={(e) => setFooterData({...footerData, enabled: e.target.checked})}
+              onChange={(e) => setFooterData({ ...footerData, enabled: e.target.checked })}
               className="sr-only peer"
             />
             <div className="w-11 h-6 bg-gray-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
@@ -345,6 +385,6 @@ function getIconComponent(iconName) {
     SiLeetcode: <SiLeetcode />,
     FaLink: <FaLink />
   };
-  
+
   return icons[iconName] || <FaLink />;
 }
