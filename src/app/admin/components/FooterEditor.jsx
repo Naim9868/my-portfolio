@@ -54,7 +54,7 @@ export default function FooterEditor() {
   };
 
   const handleSave = async () => {
-    console.log(footerData);
+    
     try {
       const response = await fetch('/api/admin/footer', {
         method: 'POST',
