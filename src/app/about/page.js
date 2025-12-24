@@ -44,7 +44,7 @@ const AboutPage = () => {
       
       const data = await response.json();
       
-      console.log('Fetched about data:', data);
+      // console.log('Fetched about data:', data);
       
       if (data && data.aboutPage) {
         setAboutPageData(prev => ({

@@ -37,7 +37,7 @@ const Page = () => {
 
       const data = JSON.parse(text);
 
-      console.log(data);
+      // console.log(data);
 
       setProjectsData(prev => ({
         ...prev,
