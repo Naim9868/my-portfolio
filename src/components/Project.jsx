@@ -4,10 +4,13 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
+import PhotoModal from './PhotoModal';
 
 export default function AnimatedProjects() {
   const [isVisible, setIsVisible] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [activeImage, setActiveImage] = useState(null);
   const [projectsData, setProjectsData] = useState({
     projects: [],
     enabled: true,
@@ -52,7 +55,7 @@ const { projects } = projectsData;
 
 
   // Fallback component for missing images
-  const ImageWithFallback = ({ src, alt, className, fallbackText }) => {
+  const ImageWithFallback = ({ src, alt, className, fallbackText, onClick }) => {
     const [imgError, setImgError] = useState(false);
     
     if (imgError || !src || src === '/api/placeholder/400/250') {
@@ -69,6 +72,7 @@ const { projects } = projectsData;
       <img 
         src={src} 
         alt={alt}
+        onClick={onClick}
         className={className}
         onError={() => setImgError(true)}
       />
@@ -128,14 +132,26 @@ const { projects } = projectsData;
               )}
 
               {/* Project Image - Smaller on Mobile */}
-              <div className="overflow-hidden rounded-lg shadow-xl shadow-right  shadow-gray-400/30">
+              <div className=" rounded-lg shadow-xl shadow-right  shadow-gray-400/30">
                 <ImageWithFallback
                   src={project.image}
                   alt={project.title}
                   fallbackText={project.title.split(' ')[0]}
+                  onClick={() => {
+                          setActiveImage(
+                            project.image.startsWith("http")
+                              ? project.image
+                              : `/${project.image}`
+                          );
+                          setOpen(true);
+                        }}
                   className="w-full h-32 md:h-40 object-cover transition-transform duration-300 hover:scale-105"
                 />
+
               </div>
+             
+               
+
 
               {/* Category */}
               <div className="overflow-hidden">
@@ -204,6 +220,16 @@ const { projects } = projectsData;
           </button>
         </div>
       </div>
+
+       {/* Photo Modal */}
+      <PhotoModal
+        isOpen={open}
+        onClose={() => setOpen(false)}
+        src={activeImage}
+        alt="Project Image"
+      />  
     </div>
+     
+                
   );
 }

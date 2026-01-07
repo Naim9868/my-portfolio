@@ -2,12 +2,14 @@
 import Image from 'next/image';
 import { useState, useEffect } from 'react';
 import { FaExternalLinkAlt, FaGithub, FaArrowLeft, FaArrowRight } from 'react-icons/fa';
-
+import PhotoModal from '../../components/PhotoModal';
 
 //ProjectShowCase
 const Page = () => {
   const [activeFilter, setActiveFilter] = useState('all');
   const [currentProject, setCurrentProject] = useState(0);
+  const [open, setOpen] = useState(false);
+  const [activeImage, setActiveImage] = useState(null);
   const [projectsData, setProjectsData] = useState({
     projects: [],
     enabled: true,
@@ -36,8 +38,6 @@ const Page = () => {
       }
 
       const data = JSON.parse(text);
-
-      // console.log(data);
 
       setProjectsData(prev => ({
         ...prev,
@@ -215,6 +215,8 @@ const Page = () => {
               >
                 <div className="relative h-48 overflow-hidden">
                   {project.image && typeof project.image === "string" && (
+                    
+                   
                     <Image
                       src={project.image.startsWith("http")
                         ? project.image
@@ -224,7 +226,17 @@ const Page = () => {
                       height={200}
                       alt={project.title}
                       className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                    />)}
+                       onClick={() => {
+                          setActiveImage(
+                            project.image.startsWith("http")
+                              ? project.image
+                              : `/${project.image}`
+                          );
+                          setOpen(true);
+                        }}
+                    />
+                      
+                    )}
 
                   {project.featured && (
                     <div className="absolute top-4 right-4">
@@ -233,16 +245,17 @@ const Page = () => {
                       </span>
                     </div>
                   )}
-                  <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center space-x-4">
+                  <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center space-x-4 pointer-events-none">
                     <a
                       href={project.liveUrl}
-                      className="p-3 bg-white rounded-full hover:scale-110 transition-transform duration-300"
+                      className="p-3 bg-white rounded-full hover:scale-110 transition-transform duration-300 pointer-events-auto"
                     >
                       <FaExternalLinkAlt className="text-slate-800" />
                     </a>
+
                     <a
                       href={project.githubUrl}
-                      className="p-3 bg-white rounded-full hover:scale-110 transition-transform duration-300"
+                      className="p-3 bg-white rounded-full hover:scale-110 transition-transform duration-300 pointer-events-auto"
                     >
                       <FaGithub className="text-slate-800" />
                     </a>
@@ -298,6 +311,13 @@ const Page = () => {
           </div>
         </section>
       </div>
+      {/* Modal */}
+                     <PhotoModal
+                        isOpen={open}
+                        onClose={() => setOpen(false)}
+                        src={activeImage}
+                        alt="Project Image"
+                      />
     </div>
   );
 };
