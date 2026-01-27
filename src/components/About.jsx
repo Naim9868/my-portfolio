@@ -96,6 +96,7 @@ export default function AnimatedAbout() {
                           opacity-95 group-hover:opacity-100
                           transform transition-all duration-500 ease-in-out
                           `}
+                unoptimized
               />
              )}
             </div>
