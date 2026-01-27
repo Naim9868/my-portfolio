@@ -189,6 +189,17 @@ const fetchProjectsData = async () => {
     });
   };
 
+  const moveProject = (index, direction) => {
+    const newIndex = index + direction;
+    if (newIndex < 0 || newIndex >= projectsData.projects.length) return;
+
+    const updatedProjects = [...projectsData.projects];
+    const [movedProject] = updatedProjects.splice(index, 1);
+    updatedProjects.splice(newIndex, 0, movedProject);
+
+    setProjectsData(prev => ({ ...prev, projects: updatedProjects }));
+  };
+
   return (
     <div className="bg-gray-800 rounded-xl p-6 border border-gray-700">
       <div className="flex justify-between items-center mb-6">
@@ -379,18 +390,34 @@ const fetchProjectsData = async () => {
                   <div className="flex gap-2">
                     <button
                       onClick={() => startEdit(index)}
-                      className="p-2 bg-gray-700 hover:bg-gray-600 rounded-lg transition-colors"
+                      className="p-2 h-10 bg-gray-700 hover:bg-gray-600 rounded-lg transition-colors"
                       title="Edit"
                     >
                       <FaEdit />
                     </button>
                     <button
                       onClick={() => removeProject(index)}
-                      className="p-2 bg-red-600 hover:bg-red-700 rounded-lg transition-colors"
+                      className="p-2 h-10 bg-red-600 hover:bg-red-700 rounded-lg transition-colors"
                       title="Delete"
                     >
                       <FaTrash />
                     </button>
+                    <div className='flex flex-col'>
+                      <button
+                        className="p-2 mb-2 bg-gray-700 hover:bg-gray-600 rounded-lg transition-colors"
+                        title="Move Up"
+                        onClick={()=> moveProject(index, -1)}
+                      >
+                        ↑
+                      </button>
+                      <button
+                        className="p-2 bg-gray-700 hover:bg-gray-600 rounded-lg transition-colors"
+                        title="Move Down"
+                        onClick={()=> moveProject(index, 1)}
+                      >
+                        ↓
+                      </button>
+                    </div>
                   </div>
                 </div>
                 
