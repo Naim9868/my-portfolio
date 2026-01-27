@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { FaDownload,FaProjectDiagram } from 'react-icons/fa';
+import PhotoModal from './PhotoModal';
 
 export default function AnimatedAbout() {
   const [isVisible, setIsVisible] = useState(false);
@@ -20,6 +21,9 @@ export default function AnimatedAbout() {
       showImage: true,
       showStats: true
     });
+
+  const [open, setOpen] = useState(false);
+  const [activeImage, setActiveImage] = useState('');
 
   useEffect(() => {
     setIsVisible(true);
@@ -80,6 +84,14 @@ export default function AnimatedAbout() {
                 alt="Profile"
                 width={400}
                 height={300}
+                onClick={() => {
+                          setActiveImage(
+                            aboutData.imageUrl.startsWith("http")
+                              ? aboutData.imageUrl
+                              : `/${aboutData.imageUrl}`
+                          );
+                          setOpen(true);
+                }}
                 className={`w-full h-full object-cover rounded-[5px]
                           opacity-95 group-hover:opacity-100
                           transform transition-all duration-500 ease-in-out
@@ -211,6 +223,14 @@ export default function AnimatedAbout() {
         </div>
       </div>
 
+      {/* Photo Modal */}
+            <PhotoModal
+              isOpen={open}
+              onClose={() => setOpen(false)}
+              src={activeImage}
+              alt="Project Image"
+            />  
+
       {/* Custom animations */}
       <style jsx>{`
         @keyframes orbFloat {
@@ -246,6 +266,7 @@ export default function AnimatedAbout() {
           }
         }
       `}</style>
+
     </div>
   );
 }
