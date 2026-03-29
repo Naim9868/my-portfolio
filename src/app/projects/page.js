@@ -171,6 +171,7 @@ const Page = () => {
                 <div className="flex space-x-4 pt-4">
                   <a
                     href={activeFeaturedProject?.liveUrl}
+                    target='_blank'
                     className="flex items-center space-x-2 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-xl transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl"
                   >
                     <FaExternalLinkAlt />
@@ -178,6 +179,7 @@ const Page = () => {
                   </a>
                   <a
                     href={activeFeaturedProject?.githubUrl}
+                    target='_blank'
                     className="flex items-center space-x-2 px-6 py-3 bg-slate-800 dark:bg-slate-700 hover:bg-slate-900 dark:hover:bg-slate-600 text-white rounded-xl transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl"
                   >
                     <FaGithub />
@@ -248,6 +250,7 @@ const Page = () => {
                   <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center space-x-4 pointer-events-none">
                     <a
                       href={project.liveUrl}
+                      target='_blank'
                       className="p-3 bg-white rounded-full hover:scale-110 transition-transform duration-300 pointer-events-auto"
                     >
                       <FaExternalLinkAlt className="text-slate-800" />
@@ -255,6 +258,7 @@ const Page = () => {
 
                     <a
                       href={project.githubUrl}
+                      target='_blank'
                       className="p-3 bg-white rounded-full hover:scale-110 transition-transform duration-300 pointer-events-auto"
                     >
                       <FaGithub className="text-slate-800" />
@@ -293,12 +297,14 @@ const Page = () => {
                     <div className="flex space-x-2">
                       <a
                         href={project.liveUrl}
+                        target='_blank'
                         className="p-2 text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-300"
                       >
                         <FaExternalLinkAlt />
                       </a>
                       <a
                         href={project.githubUrl}
+                        target='_blank'
                         className="p-2 text-slate-600 dark:text-slate-300 hover:text-slate-800 dark:hover:text-white transition-colors duration-300"
                       >
                         <FaGithub />

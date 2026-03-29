@@ -197,12 +197,14 @@ const { projects } = projectsData;
               <div className="overflow-hidden flex flex-col sm:flex-row gap-2 p-2">
                 <a 
                   href={project.liveUrl}
+                  target='_blank'
                   className="flex-1 px-3 py-2 bg-gradient-to-r from-[#0a192f] to-blue-500 text-white text-xs md:text-sm font-medium rounded-lg text-center hover:from-green-600 hover:to-blue-600 transition-all transform hover:scale-105 border border-transparent hover:border-white/20"
                 >
                   Live Demo
                 </a>
                 <a 
                   href={project.githubUrl}
+                  target='_blank'
                   className="flex-1 px-3 py-2 bg-white/10 text-white text-xs md:text-sm font-medium rounded-lg text-center border border-white/20 hover:bg-white/20 transition-all transform hover:scale-105"
                 >
                   Code
